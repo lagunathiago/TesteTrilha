@@ -3,17 +3,17 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   projectId: 'hp9zn2',
   e2e: {
-    baseUrl: "https://www.hml.lector.live/testesautomatizados/subscribe/login",
-    
-    specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}', 
+    testIsolation: false,
+    viewportWidth: 1920,
+    viewportHeight: 1080,
 
-    chromeWebSecurity: false, 
-    video: true, 
-    videoCompression: 32, 
-    videoUploadOnPasses: false, 
-    defaultCommandTimeout: 10000, 
-    execTimeout: 120000, 
-    pageLoadTimeout: 60000, 
-    waitForAnimations: true 
+    video: true,
+    videoCompression: false, 
+    screenshotOnRunFailure: true,
+
+    defaultCommandTimeout: 10000,
+    pageLoadTimeout: 30000,
+
+    setupNodeEvents(on, config) {}
   }
 });

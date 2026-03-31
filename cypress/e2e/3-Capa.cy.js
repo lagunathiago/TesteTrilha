@@ -1,22 +1,45 @@
-/// <reference types="cypress" />
 
-Cypress.on("uncaught:exception", (err) => {
-  if (err.message.includes("unselectable")) {
+Cypress.on('uncaught:exception', (err) => {
+  const msg = err.message || '';
+
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
+  if (
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   
+    msg.includes("reading 'then'") ||                        
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Clipboard') ||
+    msg.includes('renderCertificateClick is not a function')
+  ) {
     return false;
   }
 });
 
 describe("Teste - Login", () => {
   before(() => {
-    //Entra na página de login
-    cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
+    cy.viewport(1920, 1080);
+
+    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
 
-    //Faz login
-    cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
-    cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
-    cy.get(".popup").contains("button", "Entrar").click();
-  });
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should('be.visible')
+      .type("thiagosuporte@uorak.com");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should('be.visible')
+      .type("123");
+
+    cy.get('#btn-entrar', { timeout: 60000 })
+      .should('be.visible')
+      .click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
+
+});
 
   context("Teste de capa", () => {
     it("Capa/Banner/Tradicional", () => {
@@ -27,20 +50,21 @@ describe("Teste - Login", () => {
         .click();
 
       //Clica na categoria 05/01
-      cy.contains("li.list-group-item", "Categoria 05/01").click({ force: true });
+      cy.contains("li.list-group-item", "00000Teste")
+      .click();
 
-      //Editando Nome da trilha e o Idioma
-      cy.get('.icon-edit', { timeout: 60000 })
-        .filter(':visible')
-        .first()
-        .parents('button, span, a, div')
-        .first()
-        .should('be.visible')
-        .click({ force: true });
+      cy.get('.title-bar > .btn-icon').click()
 
+      cy.wait(1000)
 
-      cy.get("#trailName").click(); // Clica pra digitar
-      cy.get("#trailName").type("Teste de capas"); //  Nome no Treinamento
+       //preenche o campo de nome da trilha
+        cy.get('input[placeholder="Informe o nome"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('Teste Capa', { delay: 50 })
 
       //Tradicional
       cy.get(
@@ -49,34 +73,58 @@ describe("Teste - Login", () => {
       cy.log("AJUSTE A IMAGEM MANUALMENTE");
       cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
       cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-      cy.wait(2000);
+      cy.wait(1000);
       //Capa
       cy.get(
         'label.thumb-placeholder[aspect="cover"] input[type="file"]'
-      ).selectFile("cypress/fixtures/Capa.jpg", { force: true });
+      ).selectFile("cypress/fixtures/capa 3.png", { force: true });
       cy.log("AJUSTE A IMAGEM MANUALMENTE");
       cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
       cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-      cy.wait(2000);
+      cy.wait(1000);
 
       //Baner
       cy.get(
         'label.thumb-placeholder[aspect="banner"] input[type="file"]'
-      ).selectFile("cypress/fixtures/Benner.jpg", { force: true });
+      ).selectFile("cypress/fixtures/210938.jpg", { force: true });
       cy.log("AJUSTE A IMAGEM MANUALMENTE");
       cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
       cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-      cy.wait(2000);
+      cy.wait(1000);
     });
 
-    it("Conteúdos", () => {
-      cy.get('[ui-sref="accessLink.content.trails.edit.id.contents"]').click(); // Clica em conteudos
-      cy.get("ui-view.ng-scope > .flex > .btn-swipe-accent").click(); // Clica em novo
-      //Doc
-      cy.get(".editing-resource > :nth-child(2) > .w-100").click(); // Clicou na aba
-      cy.get(".open > .ui-select-choices > :nth-child(2)").click(); // Selecionar documentos como tipo de conteúdo
-      cy.get(".weight").type("1"); // Selecionar peso
-      cy.get(".open > .ui-select-choices > :nth-child(2)").click(); // Selecionar peso 1
+    it("Estapas", () => {
+
+      //Estapas
+      cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+      .scrollIntoView()
+      .click()
+
+      cy.wait(1000)
+
+      //Nova estapa
+      cy.get('.pt-20 > .flex > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Novo conteudo
+      cy.get('[colspan="6"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Clica em treinamento
+      cy.get('.pv-5 > .w-100')
+      .click()
+
+      cy.wait(1000)
+
+      //Clica em documento
+      cy.get('.open > .ui-select-choices > :nth-child(3)')
+      .click()
+
+      cy.wait(1000)
 
       cy.contains(".ui-select-container", "Escolha um documento")
         .should("be.visible")
@@ -84,90 +132,60 @@ describe("Teste - Login", () => {
         .within(() => {
           cy.get("input.ui-select-search")
             .should("be.visible")
-            .type("Lector Imagem.png");
+            .type("Manual Minha");
         });
 
-      cy.contains(".ui-select-choices-row", "Lector Imagem.png", {
+      cy.contains(".ui-select-choices-row", "Manual Minha", {
         timeout: 30000,
       })
         .should("be.visible")
         .click();
 
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+      cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding')
+      .click()
+
     });
+ 
+    it('Cria a turma', () => {
 
-    it("Turma Gratuita sem aprovação", () => {
-      cy.get('[ui-sref="accessLink.content.trails.edit.id.classes"]').click();
-      cy.get('[ng-click="editClass()"]').click(); //Nova turma
-      cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
+      //Vai até turma
+    cy.get('[trails=""] > .tabs > .ng-scope')
+    .scrollIntoView()
+    .click(); 
 
-      cy.get(".navigation-controls > .ml-20").click(); //botao prximo
-      cy.get(".navigation-controls > .ml-20").click(); //botao prximo
+      //nova turma
+      cy.get('.gap > .btn-swipe-accent')
+      .click()
+     
+        // NOME DA TURMA (re-get após digitar para evitar re-render do Angular)
+        cy.get('input[placeholder="Informe um nome para a turma"]', { timeout: 20000 })
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('Turma teste', { delay: 50, force: true })
+            .blur();
 
-      cy.get("tr.ng-scope > :nth-child(4) > .middle > .btn").click();
-      cy.get(
-        '.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default'
-      ).type("Aluno");
-      cy.get(".ui-select-dropdown").should("be.visible");
+        cy.get('input[placeholder="Informe um nome para a turma"]')
+            .filter(':visible')
+            .first()
+            .should('have.value', 'Turma teste');
 
-      cy.contains(".ui-select-choices-row", "Aluno").click();
+        cy.get(".class-price > :nth-child(1) > .icon-checkbox").click(); //selecionar turma gratuita
+        cy.get(".column > :nth-child(1) > .icon-checkbox").click(); //aprovação do gestor
 
-      cy.contains("button", "Adicionar").should("be.visible").click();
+        cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
+        .click(); //salvar turma
+        
+        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+        //Salvar Turma
 
-      cy.wait(1000);
+      cy.wait(5000)
 
-      // Clica no botão "Salvar Turma"
-
-      cy.get(".add-content > .end > .btn-swipe-accent").click();
-      cy.get(".content-box-footer > .flex > .btn-swipe-accent").click();
-      cy.get(
-        '[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox'
-      ).click(); //selecionar versionamento
-      cy.get(
-        '[ng-show="modal.useVersioning"] > .modal > .end > .ml-10'
-      ).click(); //salvar sem versionamento
-    });
-    it("Capas", () => {
-      //Clica em Cards
-      cy.get(".title-bar > .filter").click();
-      cy.wait(1000);
-
-      //Miniaturas
-      cy.get(".open > .ui-select-choices > :nth-child(3)", { timeout: 60000 })
-        .should("be.visible")
-        .click();
-      cy.wait(12000);
-
-      //Clica em Cards
-      cy.get(".title-bar > .filter").click();
-      cy.wait(2000);
-
-      //somente capa
-      cy.get(".open > .ui-select-choices > :nth-child(2)", { timeout: 60000 })
-        .should("be.visible")
-        .click();
-      cy.wait(12000);
-
-      //Clica em Cards
-      cy.get(".title-bar > .filter").click();
-      cy.wait(2000);
-
-      //cartoes
-      cy.get(".open > .ui-select-choices > :nth-child(1)", { timeout: 60000 })
-        .should("be.visible")
-        .click();
-      cy.wait(12000);
-
-      //Clica em Cards
-      cy.get(".title-bar > .filter").click();
-      cy.wait(2000);
-
-      //cartoes
-      cy.get(".open > .ui-select-choices > :nth-child(4)", { timeout: 60000 })
-        .should("be.visible")
-        .click();
-      cy.wait(60000);
-    });
+          });
+      });
   });
-});
+

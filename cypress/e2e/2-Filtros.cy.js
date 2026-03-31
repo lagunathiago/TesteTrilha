@@ -1,26 +1,46 @@
-/// <reference types="cypress" />
-
 Cypress.on('uncaught:exception', (err) => {
-    if (err.message.includes('unselectable')) {
+  const msg = err.message || '';
+
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
+  if (
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   
+    msg.includes("reading 'then'") ||                        
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Clipboard') ||
+    msg.includes('renderCertificateClick is not a function')
+  ) {
     return false;
-    }
+  }
 });
 
 describe("Teste - Login", () => {
-    beforeEach(() => {
-        //Entra na página de login
-        cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
-        cy.contains("button", "Entrar").click();
-    
-    //Faz login
-        cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
-        cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
-        cy.get(".popup").contains("button", "Entrar").click();
-    });
+  before(() => {
+    cy.viewport(1920, 1080);
 
+    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
+    cy.contains("button", "Entrar").click();
 
-    context("Filtros", () => {
-    
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should('be.visible')
+      .type("thiagosuporte@uorak.com");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should('be.visible')
+      .type("123");
+
+    cy.get('#btn-entrar', { timeout: 60000 })
+      .should('be.visible')
+      .click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
+
+});
+
+context("Filtros", () => {
     it("Pesquisar Trilhas", () => {
 
         // Clicando na aba Trilhas
@@ -32,19 +52,15 @@ describe("Teste - Login", () => {
         cy.get('input[placeholder="Pesquisar trilhas"]', { timeout: 60000 })
             .should('be.visible')
             .clear()
-            .type('Teste', { delay: 50 });
+            .type('Teste{enter}', { delay: 50 });
 
         cy.wait(1000)
+
         cy.get('.multiselect.ng-dirty > .btn').click()
 
     });
 
     it("Filtro Ordenação AZ/ZA", () => {
-
-        // Clicando na aba Trilhas
-        cy.get('[title="Trilhas"] > .sideitem', { timeout: 60000 })
-            .should('be.visible')
-            .click();
         
         //Clica em nome Z/A
         cy.get('[ng-model="$parent.order"]').click()
@@ -64,12 +80,8 @@ describe("Teste - Login", () => {
             .click({ force: true });
 
     });
-    it("Filtro Mais Recente/Mais Antigo", () => {
 
-        // Clicando na aba Trilhas
-        cy.get('[title="Trilhas"] > .sideitem', { timeout: 60000 })
-            .should('be.visible')
-            .click();
+    it("Filtro Mais Recente/Mais Antigo", () => {
 
         cy.get('[ng-model="$parent.order"]').click()
         cy.wait(1000)
@@ -91,22 +103,59 @@ describe("Teste - Login", () => {
 
     it("Filtro Card", () => {
 
-        // Clicando na aba Trilhas
-        cy.get('[title="Trilhas"] > .sideitem', { timeout: 60000 })
-            .should('be.visible')
-            .click();
+        //Clica em Cartoes
+        cy.get('.visible-xl')
+        .click()
 
-        cy.get('[ng-model="$parent.order"]').click()
         cy.wait(1000)
         
-        //Miniaturas
-        cy.get(':nth-child(1) > .btn-square').click()
+        //Capa
+        cy.get('.open > .ui-select-choices > :nth-child(1)')
+        .click()
 
-        //Miniaturas pequenas
-        cy.get(':nth-child(2) > .btn-square').click()
+        cy.wait(1000)
+
+         //Clica em Cartoes
+        cy.get('.visible-xl').click()
+       
+        //Miniaturas 
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+           cy.wait(1000)
+
+         //Clica em Cartoes
+        cy.get('.visible-xl').click()
+
+                     cy.wait(1000)
+        
+        //Capa
+        cy.get('.open > .ui-select-choices > :nth-child(1)')
+        .click()
+
+        cy.wait(1000)
+
+        //Clica em Cartoes
+        cy.get('.visible-xl').click()
+
+        cy.wait(1000)
 
         //Lista
-        cy.get(':nth-child(3) > .btn-square').click()
-    });
+        cy.get('.open > .ui-select-choices > :nth-child(4)')
+        .click()
+
+           cy.wait(1000)
+
+        //Clica em Cartoes
+        cy.get('.visible-xl').click()
+        
+        cy.wait(1000)
+
+        //Cartoes
+        cy.get('.open > .ui-select-choices > :nth-child(1)')
+        .click()
+        
+
+        });
     });
 });

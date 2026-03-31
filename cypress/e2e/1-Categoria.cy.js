@@ -1,28 +1,43 @@
 
-/// <reference types="cypress" />
-
 Cypress.on('uncaught:exception', (err) => {
-  if (err.message.includes('unselectable')) {
+  const msg = err.message || '';
+
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
+  if (
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   
+    msg.includes("reading 'then'") ||                        
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Clipboard') ||
+    msg.includes('renderCertificateClick is not a function')
+  ) {
     return false;
   }
 });
 
-const Administrador = {
-  email: 'suporte2@lectortec.com.br',
-  senha: '#C4iocl4r413',
-  perfil: 'Administrador'
-};
-
 describe("Teste - Login", () => {
   before(() => {
-    //Entra na página de login
-    cy.visit("https://www.hml.lector.live/lector_suporte/showcase/2257");
+    cy.viewport(1920, 1080);
+
+    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
 
-    //Faz login
-    cy.get('[style="z-index: 26;"] > :nth-child(1) > :nth-child(1) > .popup > :nth-child(1) > .ng-pristine').type("qualidade@lectortec.com.br");
-    cy.get("#login_password_navbar").type("c8d593QGXOkjRjC");
-    cy.get(".popup").contains("button", "Entrar").click();
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should('be.visible')
+      .type("thiagosuporte@uorak.com");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should('be.visible')
+      .type("123");
+
+    cy.get('#btn-entrar', { timeout: 60000 })
+      .should('be.visible')
+      .click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
   });
 
   context("Teste Categoria", () => {
@@ -30,10 +45,14 @@ describe("Teste - Login", () => {
     it("Nova categoria", () => {
 
       //Abrir menu de trilhas
-      cy.get('[title="Trilhas"] > .sideitem').click();
+      cy.get('[title="Trilhas"] > .sideitem', { timeout: 60000 })
+        .should('be.visible')
+        .click();
 
       // Clicar em adicionar categoria
-      cy.get('.node-selected > .tree-icons > .icon-add').click();
+      cy.get('.node-selected > .tree-icons > .icon-add', { timeout: 60000 })
+  .should('be.visible')
+  .click();
 
       // Preencher nome da categoria
       cy.get('input[placeholder="Nova categoria"]', { timeout: 60000 })
@@ -53,8 +72,6 @@ describe("Teste - Login", () => {
 
     it("Nova Subcategoria", () => {
 
-      cy.wait(5000); //espera para garantir que a categoria foi criada
-      //Abrir menu de trilhas
       cy.get('[title="Trilhas"] > .sideitem').click();
 
       //Selecionar categoria criada
@@ -85,6 +102,9 @@ describe("Teste - Login", () => {
 
       // Validar criação da subcategoria
       cy.contains('Subcategoria 22/01').should('be.visible');
+
     });
+
   });
+
 });

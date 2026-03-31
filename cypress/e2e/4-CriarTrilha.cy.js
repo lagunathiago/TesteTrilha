@@ -40,33 +40,6 @@ describe("Teste - Login", () => {
     .type('Trilha 05/01', { delay: 30, force: true })
     .should('have.value', 'Trilha 05/01');
 
-    /*
-  //adicionado já pronto o teste de capa
-
-     //Tradicional
-      cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile('cypress/fixtures/images6.png', { force: true });
-      cy.log('AJUSTE A IMAGEM MANUALMENTE')
-      cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
-cy.wait(2000)
-      //Capa
-      cy.get('label.thumb-placeholder[aspect="cover"] input[type="file"]').selectFile('cypress/fixtures/Capa.jpg', { force: true });
-      cy.log('AJUSTE A IMAGEM MANUALMENTE')
-      cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
-cy.wait(2000)
-
-      //Banner
-      cy.get('label.thumb-placeholder[aspect="banner"] input[type="file"]').selectFile('cypress/fixtures/Benner.jpg', { force: true });
-      cy.log('AJUSTE A IMAGEM MANUALMENTE')
-      cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
-cy.wait(2000)
-
-    
-    cy.get('[min-grade=""] > .input-number > div > .icon-pointer-up').click(); 
-*/
-
     //Etapas
     cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click(); // sessão etapas
     cy.get(".pt-20 > .flex > .btn-swipe-accent").click(); //nova etapa
