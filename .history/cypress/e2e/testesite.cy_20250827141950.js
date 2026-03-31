@@ -1,0 +1,115 @@
+describe('Teste de Login - SauceDemo', () => {
+  beforeEach(() => {
+    cy.visit('https://www.saucedemo.com/')
+  })
+
+    it('Não deve logar com senha incorreta', () => {
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('senha_errada')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('[data-test="error"]').should('be.visible')
+      .and('contain', 'Username and password do not match')
+  })
+
+    describe('Fluxo de Compra - SauceDemo', () => {
+  beforeEach(() => {
+    // Faz login antes de cada teste
+    cy.visit('https://www.saucedemo.com/')
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+    cy.url().should('include', '/inventory.html')
+  })
+
+  it('Deve adicionar um produto ao carrinho e finalizar a compra', () => {
+    // Adiciona o primeiro item
+    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+    
+    // Valida que o ícone do carrinho mostra 1 item
+    cy.get('.shopping_cart_badge').should('contain', '1')
+
+    // Vai até o carrinho
+    cy.get('.shopping_cart_link').click()
+    cy.url().should('include', '/cart.html')
+    cy.get('.inventory_item_name').should('contain', 'Sauce Labs Backpack')
+
+    // Inicia checkout
+    cy.get('[data-test="checkout"]').click()
+    cy.url().should('include', '/checkout-step-one.html')
+
+    // Preenche dados
+    cy.get('[data-test="firstName"]').type('Mika')
+    cy.get('[data-test="lastName"]').type('Tester')
+    cy.get('[data-test="postalCode"]').type('89000-000')
+    cy.get('[data-test="continue"]').click()
+
+    // Confirma resumo da compra
+    cy.url().should('include', '/checkout-step-two.html')
+    cy.get('.inventory_item_name').should('contain', 'Sauce Labs Backpack')
+
+    // Finaliza
+    cy.get('[data-test="finish"]').click()
+    cy.url().should('include', '/checkout-complete.html')
+    cy.get('.complete-header').should('contain', 'Thank you for your order!')
+  })
+
+  it('Deve adicionar vários produtos ao carrinho e finalizar a compra', () => {
+    login()
+
+    // Lista de itens a adicionar
+    const produtos = [
+      'add-to-cart-sauce-labs-backpack',
+      'add-to-cart-sauce-labs-bike-light',
+      'add-to-cart-sauce-labs-bolt-t-shirt',
+      'add-to-cart-sauce-labs-fleece-jacket',
+      'add-to-cart-sauce-labs-onesie'
+    ]
+
+    // Adiciona todos os produtos
+    produtos.forEach(produto => {
+      cy.get(`[data-test="${produto}"]`).click()
+    })
+
+    // Valida quantidade no carrinho
+    cy.get('.shopping_cart_badge').should('contain', produtos.length)
+
+    // Vai para o carrinho
+    cy.get('.shopping_cart_link').click()
+    cy.url().should('include', '/cart.html')
+
+    // Valida que todos os produtos estão no carrinho
+    const nomesProdutos = [
+      'Sauce Labs Backpack',
+      'Sauce Labs Bike Light',
+      'Sauce Labs Bolt T-Shirt',
+      'Sauce Labs Fleece Jacket',
+      'Sauce Labs Onesie'
+    ]
+
+    nomesProdutos.forEach(nome => {
+      cy.get('.cart_item').should('contain', nome)
+    })
+
+    // Checkout
+    cy.get('[data-test="checkout"]').click()
+    cy.get('[data-test="firstName"]').type('Mika')
+    cy.get('[data-test="lastName"]').type('Tester')
+    cy.get('[data-test="postalCode"]').type('89000-000')
+    cy.get('[data-test="continue"]').click()
+
+    // Valida que todos os produtos aparecem no resumo
+    nomesProdutos.forEach(nome => {
+      cy.get('.cart_item').should('contain', nome)
+    })
+
+    // Finaliza compra
+    cy.get('[data-test="finish"]').click()
+    cy.url().should('include', '/checkout-complete.html')
+    cy.get('.complete-header').should('contain', 'Thank you for your order!')
+  })
+  
+})
+
+
+})
