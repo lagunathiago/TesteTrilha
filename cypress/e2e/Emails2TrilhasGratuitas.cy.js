@@ -912,7 +912,6 @@ cy.get('.modal:visible', { timeout: 20000 })
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
 
         });
-
         
         it('Aceita os Documentos', () => {
 
@@ -974,7 +973,6 @@ cy.get('.modal:visible', { timeout: 60000 })
       .click({force: true})
 
 })
-
 
    it("Aceita a trilha gratuita com aprovação0", () => {
 
