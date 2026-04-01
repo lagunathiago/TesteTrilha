@@ -508,6 +508,398 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
         cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
         //Salvar Turma
         cy.wait(4000)
+      });
+      
+       it('Criando uma trilha paga com aprovação', () => {
+        
+        //Clica no botão de adicionar nova trilha
+        cy.get('.title-bar > .btn-icon').click(); 
+        
+        //preenche o campo de nome da trilha
+        cy.get('input[placeholder="Informe o nome"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('Paga com aprovação - Trilha Automação', { delay: 50 })
+            .should('have.value', 'Paga com aprovação - Trilha Automação')
+
+        //seleciona o código
+        cy.get('input[ng-model="currentTrail.externalId"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('012025', { delay: 30 })
+            .should('have.value', '012025')
+
+        //seleciona etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
+        
+        //clica no botão de adicionar nova etapa
+        cy.get('button[ng-click="createStage()"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click();
+
+        //adicionar novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+
+        //seleciona o treinamento
+        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
+        cy.get('#ui-select-choices-row-39-0').click();
+        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+
+        //adcicionar turma
+        cy.get('[trails=""] > .tabs > .ng-scope').click();
+        cy.get('.gap > .btn-swipe-accent').click();
+        
+        // NOME DA TURMA (re-get após digitar para evitar re-render do Angular)
+        cy.get('input[placeholder="Informe um nome para a turma"]', { timeout: 20000 })
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('Turma teste', { delay: 50, force: true })
+            .blur();
+
+        cy.get('input[placeholder="Informe um nome para a turma"]')
+            .filter(':visible')
+            .first()
+            .should('have.value', 'Turma teste');
+            
+        // PREÇO (máscara monetária: 391 => 3,91)
+        cy.get('#currentClassPrice', { timeout: 60000 })
+            .should('be.visible')
+            .and('not.be.disabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('3.91', { delay: 50, force: true })
+            .blur();
+
+            //Deixar em Branco
+        cy.contains('label, span, div', 'Deixar em branco')
+            .filter(':visible')
+            .click();
+
+             cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Aiva aprovação
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+            cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()  //Lixeiro
+
+      cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
+      .type("Thiago Laguna")
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
+  .first()
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
+
+          cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
+        .click(); //salvar turma
+        
+        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+        //Salvar Turma
+
+        cy.wait(4000)
+    
+          });
+
+ it('Criando uma paga com aprovação de campos', () => {
+        
+        //Clica no botão de adicionar nova trilha
+        cy.get('.title-bar > .btn-icon').click(); 
+        
+        //preenche o campo de nome da trilha
+        cy.get('input[placeholder="Informe o nome"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('Trilha paga com aprovação de campos Personalizado - Trilha Automação', { delay: 50 })
+            .should('have.value', 'Trilha paga com aprovação de campos Personalizado - Trilha Automação')
+
+        //seleciona o código
+        cy.get('input[ng-model="currentTrail.externalId"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('012025', { delay: 30 })
+            .should('have.value', '012025')
+
+        //seleciona etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
+        
+        //clica no botão de adicionar nova etapa
+        cy.get('button[ng-click="createStage()"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click();
+
+        //adicionar novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+
+        //seleciona o treinamento
+        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
+        cy.get('#ui-select-choices-row-39-0').click();
+        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+
+        //adcicionar turma
+        cy.get('[trails=""] > .tabs > .ng-scope').click();
+        cy.get('.gap > .btn-swipe-accent').click();
+        
+        // NOME DA TURMA (re-get após digitar para evitar re-render do Angular)
+        cy.get('input[placeholder="Informe um nome para a turma"]', { timeout: 20000 })
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('Turma teste', { delay: 50, force: true })
+            .blur();
+
+        cy.get('input[placeholder="Informe um nome para a turma"]')
+            .filter(':visible')
+            .first()
+            .should('have.value', 'Turma teste');
+
+              // PREÇO (máscara monetária: 391 => 3,91)
+        cy.get('#currentClassPrice', { timeout: 60000 })
+            .should('be.visible')
+            .and('not.be.disabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('3.91', { delay: 50, force: true })
+            .blur();
+
+            //Deixar em Branco
+cy.contains('label, span, div', 'Deixar em branco')
+  .filter(':visible')
+  .first()
+  .parentsUntil('form, .modal, .panel, .row')
+  .parent()
+  .find('input[type="checkbox"]')
+  .first()
+  .click({ force: true });
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+
+      cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
+      .type("Thiago Laguna")
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
+  .first()
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
+
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+            //Clica em requer aprovação
+            cy.get('.mb-20.ng-scope > .checkbox > .icon-checkbox',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
+            
+            //Clica em 'Selecionar um campo personalizado"
+            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
+            //Clica no campo
+    cy.contains('.ui-select-choices-row span.ng-binding','campo texto 13/01',{ timeout: 60000 })
+    .scrollIntoView()
+.should('be.visible')
+.click();
+
+            //Clica em adicionar 
+            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
+      cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
+        .click(); //salvar turma
+        
+         //Salvar Turma
+        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+       
+        cy.wait(4000)
+
+      });
+    
+
+       it('Criando uma Trilha paga com aprovação de gestor e campos personalizado', () => {
+        
+        //Clica no botão de adicionar nova trilha
+        cy.get('.title-bar > .btn-icon').click(); 
+        
+        //preenche o campo de nome da trilha
+        cy.get('input[placeholder="Informe o nome"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('Trilha paga com aprovação de gestor e campos Personalizado - Trilha Automação', { delay: 50 })
+            .should('have.value', 'Trilha paga com aprovação de gestor e campos Personalizado - Trilha Automação')
+
+        //seleciona o código
+        cy.get('input[ng-model="currentTrail.externalId"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .focus()
+            .clear({ force: true })
+            .type('012025', { delay: 30 })
+            .should('have.value', '012025')
+
+        //seleciona etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
+        
+        //clica no botão de adicionar nova etapa
+        cy.get('button[ng-click="createStage()"]')
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click();
+
+        //adicionar novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+
+        //seleciona o treinamento
+        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
+        cy.get('#ui-select-choices-row-39-0').click();
+        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+
+        //adcicionar turma
+        cy.get('[trails=""] > .tabs > .ng-scope').click();
+        cy.get('.gap > .btn-swipe-accent').click();
+        
+        // NOME DA TURMA (re-get após digitar para evitar re-render do Angular)
+        cy.get('input[placeholder="Informe um nome para a turma"]', { timeout: 20000 })
+            .filter(':visible')
+            .first()
+            .should('be.enabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('Turma teste', { delay: 50, force: true })
+            .blur();
+
+        cy.get('input[placeholder="Informe um nome para a turma"]')
+            .filter(':visible')
+            .first()
+            .should('have.value', 'Turma teste');
+
+              // PREÇO (máscara monetária: 391 => 3,91)
+        cy.get('#currentClassPrice', { timeout: 60000 })
+            .should('be.visible')
+            .and('not.be.disabled')
+            .scrollIntoView()
+            .click({ force: true })
+            .focus()
+            .clear({ force: true })
+            .type('3.91', { delay: 50, force: true })
+            .blur();
+
+            //Deixar em Branco
+cy.contains('label, span, div', 'Deixar em branco')
+  .filter(':visible')
+  .first()
+  .parentsUntil('form, .modal, .panel, .row')
+  .parent()
+  .find('input[type="checkbox"]')
+  .first()
+  .click({ force: true });
+
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Aiva aprovação
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+
+      cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
+      .type("Thiago Laguna")
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
+  .first()
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
+
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+            //Clica em requer aprovação
+            cy.get('.mb-20.ng-scope > .checkbox > .icon-checkbox',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+            
+            //Clica em 'Selecionar um campo personalizado"
+            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
+            //Clica no campo
+    cy.contains('.ui-select-choices-row span.ng-binding','campo 05/01/2026 capo caopo',{ timeout: 60000 })
+    .scrollIntoView()
+.should('be.visible')
+.click();
+
+            //Clica em adicionar 
+            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
+      cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
+        .click(); //salvar turma
+        
+         //Salvar Turma
+        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+      
+        cy.wait(4000)
 
       });
    });

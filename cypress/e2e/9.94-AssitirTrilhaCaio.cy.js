@@ -122,5 +122,6 @@ describe("Teste - Assistir Trilha (Aluno)", () => {
         cy.wait(5000);
 
         cy.log('✅ Trilha acessada, inscrição feita e avaliação realizada com sucesso!');
+        
     });
 });

@@ -42,7 +42,7 @@ describe("Teste - Login", () => {
 
   context("Validações gerais do fluxo de e-mails", () => {
 
-    /*
+    
      it("Vai até Vitrine", () => {
         
         // Clicando no icon da vitrine
@@ -889,7 +889,7 @@ cy.get('.modal:visible', { timeout: 20000 })
         .click();
 
         });
-        */
+        
 
         it('Entra no perfil adm pra recusar os documentos', () => {
     
@@ -913,7 +913,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         });
 
-        /*
+        
         it('Aceita os Documentos', () => {
 
             cy.wait(3000)
@@ -975,7 +975,7 @@ cy.get('.modal:visible', { timeout: 60000 })
 
 })
 
-/*
+
    it("Aceita a trilha gratuita com aprovação0", () => {
 
     cy.wait(2000)
@@ -1083,7 +1083,7 @@ cy.get('.modal:visible', { timeout: 60000 })
   .click()
 
         });
-        */
+        
 
 it("Vai até os relatóros e Verifica os logs de Email", ()=> {
 
