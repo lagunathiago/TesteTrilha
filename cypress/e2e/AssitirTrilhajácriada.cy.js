@@ -41,7 +41,7 @@ describe("Teste - Login", () => {
 });
 
   context("Validações gerais do fluxo de e-mails", () => {
-    /*
+    
     
      it("Vai até Vitrine", () => {
         
@@ -74,13 +74,12 @@ describe("Teste - Login", () => {
             .click();
 
         cy.wait(5000);
-/*
+
         //Fazer incrição
         cy.get('.mt-10 > .default-gap > div > .btn-swipe-accent', { timeout: 15000 })
         .click()
-*/
 
-/*
+
       });
 
       it('Clica no acessar do treinamento', () => {
@@ -160,7 +159,6 @@ cy.contains('.course-info-section-title','Web Conferencia Trilha',{timeout:10000
 
       cy.wait(5000)
       
-      /*
       //Clica em Concluir Treinamento
       cy.get('.header > .btn-swipe-accent',{timeout:10000})
       .click()
@@ -171,7 +169,7 @@ cy.contains('.course-info-section-title','Web Conferencia Trilha',{timeout:10000
 
 
       });
-*/
+
        it("Minha área/Meu Calendario", () => {
 
       //Minha área
@@ -201,8 +199,21 @@ cy.contains('.course-info-section-title','Web Conferencia Trilha',{timeout:10000
 
         it('Volta pro treinamento e conclui', () => {
 
+          //Volta
       cy.get('.showcase-head-2 > .btn')
       .click()
+        
+        // Clicando no icon da vitrine
+      cy.get('.active > .icon-next', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+        cy.wait(1000)
+
+         //Clica na vitrine Automação
+        cy.get('.showcase-navigation-menu > :nth-child(2)', { timeout: 60000 })
+        .should('be.visible')
+        .click();
 
         //Ver Tudo
        cy.get('.show-all', { timeout: 60000 })
@@ -210,20 +221,300 @@ cy.contains('.course-info-section-title','Web Conferencia Trilha',{timeout:10000
   .should('be.visible')
   .click();
 
-   //Clica na Trilha
+        //Clica na Trilha
         cy.contains('.showcase-card-title', 'Trilha já criada - Automação', { timeout: 15000 })
              .scrollIntoView()
             .should('be.visible')
             .click();
 
-        cy.wait(5000);
+            cy.wait(2000)
 
+            //Clica em acessar no Treinamento
         cy.get(':nth-child(2) > .overflow-x > .stage-content-list > tbody > tr.ng-scope > :nth-child(6) > .pv-5 > .btn-swipe-accent', { timeout: 15000 })
             .filter(':visible')
             .first()
             .click()
- 
+
+            cy.wait(1000)
+
+              //Clica em voltar
+    cy.get("#hideResource", { timeout: 20000 })
+      .should("be.visible")
+      .click({ force: true });
+
+         //Clica em Concluir Treinamento
+      cy.get('.header > .btn-swipe-accent',{timeout:10000})
+      .click()
+
+      //Finaliza
+      cy.get('[switch="modal.finishCourse"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent', {timeout:60000})
+      .click()
+
+      cy.wait(2000)
+
+      });
+
+it('Responde a Avaliação todas na mesma página Thiago', () => {
+
+  //Clica em responder, na primeira avaliação
+  cy.get(':nth-child(3) > .overflow-x > .stage-content-list > tbody > :nth-child(1) > :nth-child(6) > .pv-5 > .btn-swipe-accent',{timeout:20000})
+  .click()
+
+  cy.wait(2000)
+
+  //Na questão 1 clica na primeira
+  cy.get('#q_107269 > .q-answer > .alternatives-grid-box > :nth-child(1) > :nth-child(1) > .checkbox > .icon-checkbox')
+  .scrollIntoView()
+  .click()
+
+  //Na questao 2 clica na segunda
+  cy.get('#q_123731 > .q-answer > .alternatives-grid-box > :nth-child(2) > :nth-child(1) > .checkbox > .icon-checkbox')
+.scrollIntoView()
+.click()
+
+//Na questão 3 clcia na priemira
+cy.get('#q_107271 > .q-answer > .alternatives-grid-box > :nth-child(1) > :nth-child(1) > .checkbox > .icon-checkbox')
+.scrollIntoView()
+.click()
+
+//Clica em enviar resposta
+cy.get('.evaluation-actions > .end > .btn-swipe-accent')
+.click()
+
+//Salvar
+cy.get('[switch="service.modalSendAnswers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+.click()
+
+cy.wait(3000)
+
+//Voltar
+cy.get('.evaluation-actions > .flex > .btn-swipe-accent')
+.click()
+
+});
+
+it('Responde a avaliação Reação uma por página Thiago', () => {
+
+  cy.wait(2000)
+
+  //Clica na avaliação
+  cy.get(':nth-child(2) > :nth-child(6) > .pv-5',{timeout:10000})
+  .click()
+
+  cy.wait(1000)
+
+  //Responde Concordo totalmente na primeira questao
+  cy.get('.q-answer > .ng-scope > :nth-child(1) > .icon-radio')
+  .click()
+
+  //Proximo
+  cy.get('[ng-click="evaluationViewerService.nextQuestion()"]')
+  .click()
+
+  cy.wait(2000)
+
+  //Seleciona a quinta estrela na segunda questao
+  cy.get(':nth-child(5) > .classificative-star')
+  .click()
+
+  //Proximo
+  cy.get('[ng-click="evaluationViewerService.nextQuestion()"]')
+  .click()
+
+  cy.wait(2000)
+
+  //Responde o quinto numero
+  cy.get(':nth-child(5) > .classificative-number')
+  .click()
+
+  cy.wait(2000)
+
+  //Clica em enviar resposta
+cy.get('.evaluation-actions > .end > .btn-swipe-accent')
+.click()
+
+//Salvar
+cy.get('[switch="service.modalSendAnswers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+.click()
+
+cy.wait(3000)
+
+//Voltar
+cy.get('.evaluation-actions > .flex > .btn-swipe-accent')
+.click()
 
     });
+
+    it('Reaponde a avaliação uma por página Thiago', () => {
+
+      cy.wait(2000)
+
+      //Clica na avaliação
+      cy.get(':nth-child(3) > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Responde terceira resposata na primeira avaliação
+      cy.get('.alternatives-grid-box > :nth-child(1) > :nth-child(1) > .checkbox > .icon-checkbox')
+      .click()
+
+       //Proximo
+  cy.get('[ng-click="evaluationViewerService.nextQuestion()"]')
+  .click()
+
+  cy.wait(2000)
+
+  //Responde a terceira resposta na segunda avaliação
+  cy.get(':nth-child(3) > :nth-child(1) > .checkbox > .icon-checkbox')
+  .click()
+
+   //Proximo
+  cy.get('[ng-click="evaluationViewerService.nextQuestion()"]')
+  .click()
+
+  cy.wait(2000)
+
+  //Responde a primeira avaliação na terceira resposta
+  cy.get('.alternatives-grid-box > :nth-child(2) > :nth-child(1) > .checkbox > .icon-checkbox')
+  .click()
+
+  cy.wait(2000)
+
+  //Clica em enviar resposta
+cy.get('.evaluation-actions > .end > .btn-swipe-accent')
+.click()
+
+//Salvar
+cy.get('[switch="service.modalSendAnswers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+.click()
+
+cy.wait(3000)
+
+//Voltar
+cy.get('.evaluation-actions > .flex > .btn-swipe-accent')
+.click()
+
+    });
+
+it('Responde a avaliação todas na mesma página Thiago', () => {
+
+  //clica na avaliação
+  cy.get(':nth-child(4) > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+  .click()
+
+   cy.wait(2000)
+
+  //Na questão 1 clica na primeira
+  cy.get('#q_107269 > .q-answer > .alternatives-grid-box > :nth-child(1) > :nth-child(1) > .checkbox > .icon-checkbox')
+  .scrollIntoView()
+  .click()
+
+  //Na questao 2 clica na segunda
+  cy.get('#q_123731 > .q-answer > .alternatives-grid-box > :nth-child(2) > :nth-child(1) > .checkbox > .icon-checkbox')
+.scrollIntoView()
+.click()
+
+//Na questão 3 clcia na priemira
+cy.get('#q_107271 > .q-answer > .alternatives-grid-box > :nth-child(1) > :nth-child(1) > .checkbox > .icon-checkbox')
+.scrollIntoView()
+.click()
+
+//Clica em enviar resposta
+cy.get('.evaluation-actions > .end > .btn-swipe-accent')
+.click()
+
+//Salvar
+cy.get('[switch="service.modalSendAnswers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+.click()
+
+cy.wait(3000)
+
+//Voltar
+cy.get('.evaluation-actions > .flex > .btn-swipe-accent')
+.click()
+  
    });
+
+   it('Clica no scorm', () => {
+
+    //Clica em scomrm
+    cy.get(':nth-child(4) > .overflow-x > .stage-content-list > tbody > tr.ng-scope > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+    .click()
+
+    cy.log('VISUALIZE E ENVIE A RESPOSAT DO SCORM')
+    cy.pause()
+
+    cy.get('.hide-resource')
+    .click()
+    
+   });
+
+   it('Clica no documento', () => {
+
+    //clica em documentos na trilha
+    cy.get(':nth-child(5) > .overflow-x > .stage-content-list > tbody > tr.ng-scope > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+    .scrollIntoView()
+    .click()
+
+    cy.get('.modal-content > iframe', {timeout:60000})
+    .should('be.visible')
+
+    cy.wait(4000)
+
+    //Clica em voltar
+    cy.get('.hide-resource')
+    .click()
+
+    });
+    
+
+    it('Valida o Progresso da trilha', () => {
+  cy.get('div.progress-label.ng-binding', { timeout: 60000 })
+    .should('be.visible')
+    .invoke('text')
+    .then((texto) => {
+      const numero = Number(texto.replace(/[^\d]/g, ''));
+
+      expect(numero).to.not.be.NaN;
+      expect(numero).to.be.within(20, 100);
+    });
+});
+
+it('Valida o Aproveitamento da trilha', () => {
+  cy.get('div.chart-info', { timeout: 60000 })
+  .scrollIntoView()
+    .should('be.visible')
+    .within(() => {
+      cy.get('div.lector-txt-main.txt-xl.ng-binding')
+        .should('be.visible')
+        .invoke('text')
+        .then((texto) => {
+          const numero = Number(texto.replace(/[^\d]/g, ''));
+
+          expect(numero).to.not.be.NaN;
+          expect(numero).to.be.within(0, 100);
+        });
+    });
+});
+
+     
+it('Finaliza a trilha', () => {
+
+  //Clica em finalizar trilha
+  cy.get('.mt-20 > .default-gap > .btn-swipe-accent')
+  .click()
+
+  //Finalizar trilha
+  cy.get('[switch="modal.unsub"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+  .click()
+
+    cy.log('🎉 Trilha completa finalizada com sucesso!');
+
+
+});
+      
+    
+   });
+
   });
