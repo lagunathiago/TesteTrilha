@@ -41,8 +41,7 @@ describe("Teste - Login", () => {
 });
 
 context("Teste Cupons", () => {
-
-    
+   
     it("Clica em cupon", () => {
       // Clicando em Cadastros
       cy.get('[title="Cadastros"] > .sideitem', { timeout: 60000 })
@@ -800,6 +799,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
     });
 
+
   it('Entra no perfil aluno e compra as trilhas', () => {
     
    cy.visit("https://www.hml.lector.live/ext/subscribe/login");
@@ -821,6 +821,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
 
     });
+
 
     it('Vait pra categoria', () => {
 
@@ -848,7 +849,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
     });
    
-    it('Faz incrição', () => {
+  it('Faz incrição', () => {
 
         //Faz incrição
         cy.get('.mt-10 > .default-gap > div > .btn-swipe-accent')

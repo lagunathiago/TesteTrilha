@@ -147,7 +147,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
         cy.wait(4000)
     
           });
-          it('Criando uma trilha gratuita com aprovação', () => {
+               it('Criando uma trilha gratuita com aprovação', () => {
         
         //Clica no botão de adicionar nova trilha
         cy.get('.title-bar > .btn-icon').click(); 
@@ -242,6 +242,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
         cy.wait(4000)
 
       });
+      
           it('Criando uma trilha gratuita com aprovação de campos', () => {
         
         //Clica no botão de adicionar nova trilha
@@ -509,7 +510,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
         //Salvar Turma
         cy.wait(4000)
       });
-      
+     
        it('Criando uma trilha paga com aprovação', () => {
         
         //Clica no botão de adicionar nova trilha

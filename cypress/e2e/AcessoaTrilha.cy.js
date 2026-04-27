@@ -42,7 +42,6 @@ describe("Teste - Login", () => {
 
   context("Validações gerais do fluxo de e-mails", () => {
     
-    /*
      it("Vai até Vitrine", () => {
         
         // Clicando no icon da vitrine
@@ -114,7 +113,7 @@ cy.contains('.course-info-section-title','Web Teste',{timeout:10000})
       cy.wait(3000)
 
         });
-*/
+
         it('Volta pro Perfil aluno e valida os Relatórios de compras', () => {
 
     cy.visit("https://www.hml.lector.live/lector_suporte/subscribe/login");
@@ -170,8 +169,9 @@ cy.contains('.course-info-section-title','Web Teste',{timeout:10000})
 
 
        });
-       
+    
     });
+
 });
 
 

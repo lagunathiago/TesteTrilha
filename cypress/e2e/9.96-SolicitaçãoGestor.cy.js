@@ -17,13 +17,14 @@ const alunos = [
     { email: 'teste1911@sharklasers.com', senha: '123', nome: 'teste1911' },
     { email: 'caioveo1@sharklasers.com', senha: '123', nome: 'caioveo1' },
     { email: 'caio222222@sharklasers.com', senha: '123', nome: 'caio222222' },
+
 ];
 
 const gestor = {
     email: 'suporte2@lectortec.com.br',
     senha: '#C4iocl4r413',
     perfil: 'Gestor - Unidades'
-};
+}
 
 // ==================== FUNÇÕES AUXILIARES ====================
 
@@ -33,7 +34,7 @@ const gestor = {
 function fazerLogin(email, senha) {
     cy.visit(LOGIN_URL);
     cy.wait(5000);
-
+    
     // Campo de e-mail
     cy.get('body > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div.ng-scope > div > div.landing-form.ng-scope > div:nth-child(3) > form > input')
         .should('be.visible')
@@ -45,6 +46,8 @@ function fazerLogin(email, senha) {
         .should('be.visible')
         .type(senha);
     cy.wait(2000);
+
+
 
     // Botão entrar
     cy.get('#btn-entrar')
@@ -253,8 +256,7 @@ function alunoValidaAprovacao(aluno) {
     cy.log(`✅ Aluno ${aluno.email} - Trilha finalizada com sucesso!`);
 }
 
-
-// ==================== TESTES ====================
+// ==================== TESTES ==================== //
 
 describe("Teste - Solicitação de Matrícula com Aprovação do Gestor", () => {
 
@@ -280,7 +282,6 @@ describe("Teste - Solicitação de Matrícula com Aprovação do Gestor", () => 
             gestorProcessaSolicitacoes('Recusar');
         });
     });
-
 
     // ============================================================
     // PARTE 3: Alunos solicitam inscrição novamente (2ª vez)

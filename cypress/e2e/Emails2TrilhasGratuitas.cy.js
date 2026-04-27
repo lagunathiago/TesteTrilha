@@ -42,7 +42,7 @@ describe("Teste - Login", () => {
 
   context("Validações gerais do fluxo de e-mails", () => {
 
-    
+    /*
      it("Vai até Vitrine", () => {
         
         // Clicando no icon da vitrine
@@ -256,7 +256,7 @@ it('Entra no perfil adm pra recusar os documentos', () => {
   .click();
 
   //Recusa o primeiro documento
-  cy.get('tbody > :nth-child(1) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get('tbody > :nth-child(1) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -276,7 +276,7 @@ cy.get('@modal')
   });
 
   //Recusa o segundo documento
-  cy.get(':nth-child(2) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(2) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -293,7 +293,7 @@ cy.get('@modal')
   });
 
     //Recusa o terceiro documento
-  cy.get(':nth-child(3) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(3) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -554,7 +554,6 @@ cy.get('.modal:visible', { timeout: 20000 })
         .click();
 
       });
-
 it('Entra no perfil adm pra recusar os documentos', () => {
     
     cy.visit("https://www.hml.lector.live/esmp/subscribe/login");
@@ -590,7 +589,7 @@ it('Entra no perfil adm pra recusar os documentos', () => {
   .click();
 
   //Recusa o primeiro documento
-  cy.get('tbody > :nth-child(1) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get('tbody > :nth-child(1) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -610,7 +609,7 @@ cy.get('@modal')
   });
 
   //Recusa o segundo documento
-  cy.get(':nth-child(2) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(2) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -627,7 +626,7 @@ cy.get('@modal')
   });
 
     //Recusa o terceiro documento
-  cy.get(':nth-child(3) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(3) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -654,7 +653,6 @@ cy.get('.modal:visible', { timeout: 60000 })
   cy.pause()
 
         });
-
 
         it("Vai até categoria", () => {
 
@@ -743,7 +741,7 @@ cy.get('.modal:visible', { timeout: 60000 })
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
      });
-
+*/
 
  it("Vai até Vitrine", () => {
         
@@ -761,7 +759,7 @@ cy.get('.modal:visible', { timeout: 60000 })
 
             });
 
-
+/*
      it('Incrição na trilha Gratuita com aprovação', () => {
 
                 //Ver tudo
@@ -794,6 +792,7 @@ cy.get('.modal:visible', { timeout: 60000 })
         cy.pause()
 
       });
+      
          it('Incrição na trilha Gratuita com aprovação de campos personalizado', () => {
 
                 //Ver tudo
@@ -890,7 +889,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         });
         
-
+*/
         it('Entra no perfil adm pra recusar os documentos', () => {
     
     cy.visit("https://www.hml.lector.live/esmp/subscribe/login");

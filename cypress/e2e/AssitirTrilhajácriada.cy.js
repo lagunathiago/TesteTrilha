@@ -467,7 +467,6 @@ cy.get('.evaluation-actions > .flex > .btn-swipe-accent')
     .click()
 
     });
-    
 
     it('Valida o Progresso da trilha', () => {
   cy.get('div.progress-label.ng-binding', { timeout: 60000 })
@@ -510,7 +509,6 @@ it('Finaliza a trilha', () => {
   .click()
 
     cy.log('🎉 Trilha completa finalizada com sucesso!');
-
 
 });
       
