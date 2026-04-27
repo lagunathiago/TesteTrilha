@@ -41,17 +41,21 @@ describe("Teste - Login", () => {
     cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
   });
   
-  
   it('Vai até a Categoria', () => {
     
     // =============================
     // 🔹 Acessa Treinamentos
     // =============================
-    cy.get('[title="Trilhas"] > .sideitem').click();
-    cy.wait(3000);
+    cy.get('[title="Trilhas"] > .sideitem')
+    .should('be.visible')
+    .click()
 
-    cy.get('[data-nodeid="9"]')
-    .click({ force: true });
+      //Clica na Categoria
+      cy.contains("li.list-group-item", "Teste Automação",{timeout: 20000})
+      .should('be.visible')
+      .click({force: true})
+
+      cy.wait(2000)
 
   })
 
@@ -221,7 +225,6 @@ cy.contains('.ui-select-choices-row', 'thiago suporte', {timeout:60000})
     cy.wait(6000)
     
       });
-
       
     it('Criando Trilha do Segundo Cenário', () => {
         

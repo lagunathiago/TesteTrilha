@@ -13,8 +13,8 @@ const TRAIL_NAME = 'Trilha automação caio 1069'; // colocar o nome da trilha a
 const CATEGORY_NAME = 'Cypress Caio'; // colocar o nome da categoria aqui
 
 const admin = {//colocar o email e senha do admin aqui
-    email: 'suporte2@lectortec.com.br',
-    senha: '#C4iocl4r413'
+    email: 'qualidade2@lectortec.com.br',
+    senha: '2006lrnrgr'
 };
 
 // ==================== FUNÇÕES AUXILIARES ====================
@@ -38,29 +38,6 @@ function fazerLogin() {
 
     cy.url().should('not.include', '/subscribe/login');
 
-    // Garantir perfil Administrador
-    trocarPerfil('Administrador - Todos');
-
-    cy.log('✅ Login realizado com sucesso!');
-}
-
-function trocarPerfil(perfilDesejado) {
-    const nomeBase = perfilDesejado.split(' - ')[0];
-
-    cy.get('.current-profile', { timeout: 15000 })
-        .should('be.visible')
-        .invoke('text')
-        .then((textoPerfilAtual) => {
-            if (!textoPerfilAtual.trim().includes(nomeBase)) {
-                cy.get('.profile-select', { timeout: 15000 }).click();
-                cy.wait(2000);
-                cy.contains('div', 'Selecionar perfil', { timeout: 15000 }).click();
-                cy.wait(2000);
-                cy.contains('#user-options .option.item', perfilDesejado, { timeout: 15000 })
-                    .click({ force: true });
-                cy.wait(5000);
-            }
-        });
 }
 
 // ==================== TESTES ====================

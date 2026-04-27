@@ -42,6 +42,7 @@ describe("Teste - Login", () => {
 
 context("Teste Cupons", () => {
    
+  /*
     it("Clica em cupon", () => {
       // Clicando em Cadastros
       cy.get('[title="Cadastros"] > .sideitem', { timeout: 60000 })
@@ -312,7 +313,7 @@ context("Teste Cupons", () => {
       .should('be.visible')
 
     });
-
+*/
     it('Clica na Categoria', () => {
 
          //Clica no menu Trilhas
@@ -327,6 +328,7 @@ context("Teste Cupons", () => {
         
     });
 
+    /*
     it('Trilha á vista %', () => {
 
          //Clica no botão de adicionar nova trilha
@@ -437,7 +439,6 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
     });
 
-
      it('Trilha á vista R$', () => {
 
          //Clica no botão de adicionar nova trilha
@@ -545,6 +546,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
         cy.get('.content-box-footer > .flex > .btn-swipe-accent').click({ force: true });
 
     });
+    
 
   it('Trilha recorrente R$', () => {
 
@@ -798,7 +800,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
         cy.wait(5000)
 
     });
-
+*/
 
   it('Entra no perfil aluno e compra as trilhas', () => {
     

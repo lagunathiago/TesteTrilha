@@ -42,7 +42,6 @@ describe("Teste - Login", () => {
 
   context("Validações gerais do fluxo de e-mails", () => {
 
-    /*
      it("Vai até Vitrine", () => {
         
         // Clicando no icon da vitrine
@@ -741,7 +740,7 @@ cy.get('.modal:visible', { timeout: 60000 })
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
      });
-*/
+
 
  it("Vai até Vitrine", () => {
         
@@ -759,7 +758,7 @@ cy.get('.modal:visible', { timeout: 60000 })
 
             });
 
-/*
+
      it('Incrição na trilha Gratuita com aprovação', () => {
 
                 //Ver tudo
@@ -889,7 +888,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         });
         
-*/
+
         it('Entra no perfil adm pra recusar os documentos', () => {
     
     cy.visit("https://www.hml.lector.live/esmp/subscribe/login");

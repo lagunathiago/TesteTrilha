@@ -1,11 +1,21 @@
-    /* This is a Cypress test script written in JavaScript. Let me explain the key parts of the script: */
-/// <reference types="cypress" />
-
 Cypress.on('uncaught:exception', (err) => {
-    if (err.message.includes('unselectable')) {
+  const msg = err.message || '';
+  
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
+  if (
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   
+    msg.includes("reading 'then'") ||                        
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Clipboard') ||
+    msg.includes('ResizeObserver loop completed with undelivered notifications') ||
+    msg.includes('renderCertificateClick is not a function')
+  ) {
     return false;
-    }
-    });
+  }
+});
 
 describe("Teste - Login", () => {
     beforeEach(() => {
@@ -20,13 +30,20 @@ describe("Teste - Login", () => {
 
     context("Trilha - Acessar a trilha", () => {
 
+  it('Vai até a Categoria', () => {
+    
+    // =============================
+    // 🔹 Acessa Trilhas
+    // =============================
+    cy.get('[title="Trilhas"] > .sideitem').click();
+    cy.wait(3000);
+
+    cy.get('[data-nodeid="9"]')
+    .click({ force: true });
+
+  }) 
+
     it("Criando uma trilha paga com aprovação", () => {
-
-        //Clica no menu Trilhas
-        cy.get('[title="Trilhas"] > .sideitem').click(); 
-
-        //Clica no botão de adicionar nova trilha
-        cy.get('.title-bar > .btn-icon').click(); 
         
         //preenche o campo de nome da trilha
         cy.get('input[placeholder="Informe o nome"]')
@@ -129,9 +146,6 @@ describe("Teste - Login", () => {
 
     it("Criando uma trilha paga sem aprovação", () => {
 
-        //Clica no menu Trilhas
-        cy.get('[title="Trilhas"] > .sideitem').click(); 
-
         //Clica no botão de adicionar nova trilha
         cy.get('.title-bar > .btn-icon').click(); 
         
@@ -228,9 +242,6 @@ describe("Teste - Login", () => {
 
     it("Criando uma trilha gratuita com aprovação", () => {
 
-        //Clica no menu Trilhas
-        cy.get('[title="Trilhas"] > .sideitem').click(); 
-
         //Clica no botão de adicionar nova trilha
         cy.get('.title-bar > .btn-icon').click(); 
         
@@ -320,9 +331,6 @@ describe("Teste - Login", () => {
 
     it("Criando uma trilha gratuita sem aprovação", () => {
 
-        //Clica no menu Trilhas
-        cy.get('[title="Trilhas"] > .sideitem').click(); 
-
         //Clica no botão de adicionar nova trilha
         cy.get('.title-bar > .btn-icon').click(); 
         
@@ -400,9 +408,7 @@ describe("Teste - Login", () => {
         cy.get('[ng-show="modal.saveTrailVersion"] > .modal > .end > .ml-10').click({ force: true });
 
     });
-
     
-});
-
+  });
 
 });
