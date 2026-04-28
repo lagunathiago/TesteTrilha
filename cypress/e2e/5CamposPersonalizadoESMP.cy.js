@@ -29,11 +29,11 @@ describe("Teste - Login", () => {
 
    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte@uorak.com"); 
+      .type("qualidade2@lectortec.com.br"); 
 
    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("123");
+      .type("2006lrnrgr");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
@@ -43,12 +43,11 @@ describe("Teste - Login", () => {
 
  it('Vai até a Categoria', () => {
     
-    // =============================
-    // 🔹 Acessa Treinamentos
-    // =============================
     cy.get('[title="Trilhas"] > .sideitem')
     .should('be.visible')
     .click({ force: true });
+
+    cy.wait(2000)
 
       //Clica na Categoria
       cy.contains("li.list-group-item", "Teste Automação",{timeout: 20000})
@@ -60,46 +59,55 @@ describe("Teste - Login", () => {
   });
 
    //Função para excluir Trilhas
-function excluirTreinamento(nome) {
+function excluirTrilha(nome) {
 
-  //Clica no Treinamento
-  cy.contains('.card-title', nome, { timeout: 60000 })
+  //Clica na Trilha
+  cy.contains('.card-title', nome, { timeout: 10000 })
     .scrollIntoView()
     .should('be.visible')
-    .click({ force: true });
-
-  //Clica em editar
-  cy.get('.end.ng-scope > .icon-edit', { timeout: 60000 })
-    .should('be.visible')
     .click();
+
+    cy.wait(4000)
+
+//Clica em Editar
+  cy.get('button.btn-icon-accent.icon-edit', { timeout: 10000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  cy.wait(1000)
 
   //Clica em Excluir
-  cy.get('[name="SaveCourseForm"] > .content-box-footer > .content-box-footer-left > .icon-discard', { timeout: 20000 })
+  cy.get('.open-content > .content-box-footer > .content-box-footer-left > .btn-swipe-accent', { timeout: 10000 })
     .scrollIntoView()
     .click();
 
+    cy.wait(1000)
+
   //Confirma exclusão
-  cy.get('[switch="modal.removeCourse"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent', { timeout: 20000 })
+  cy.get('[switch="modal.removeTrail"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent', { timeout: 10000 })
     .click();
+
+    cy.wait(1000)
 
   //Valida que foi removido
   cy.contains('.card-title', nome).should('not.exist');
 }
 
 //Teste completo
-it('Exclui todos os Treinamentos', () => {
+it('Exclui todos as trilhas', () => {
 
-  const treinamentos = [
+  const trilhas = [
     'Primeiro Cenário Trilha',
     'Segundo Cenário Trilha',
     'Terceiro Cenário Trilha',
     'Quarto Cenário Trilha',
     'Quinto Cenário Trilha',
     'Quinto Cenário Trilha - Segunda Trilha'
+
   ];
 
-  treinamentos.forEach((nome) => {
-    excluirTreinamento(nome);
+  trilhas.forEach((nome) => {
+    excluirTrilha(nome);
 
      });
 
@@ -115,7 +123,7 @@ it('Exclui todos os Treinamentos', () => {
     cy.get('[ui-sref="accessLink.content.configurations.account-subscription.custom-fields"]')
     .click()
 
-   cy.contains('td', 'LECTOR10', { timeout: 60000 })
+   cy.contains('td', 'LECTOR10', { timeout: 10000 })
   .parents('tr')
   .within(() => {
     cy.get('button[ng-click*="showRemoveCustomField"]')
@@ -136,4 +144,3 @@ it('Exclui todos os Treinamentos', () => {
   });
 
 });
-
