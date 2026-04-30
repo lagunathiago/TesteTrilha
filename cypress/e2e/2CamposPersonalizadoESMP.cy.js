@@ -252,21 +252,22 @@ cy.pause()
 
     });
 
-     it("Vai até a vitrine", () => {
-
+    it("Vai até Vitrine", () => {
+        
         // Clicando no icon da vitrine
       cy.get('.active > .icon-next', { timeout: 60000 })
         .should('be.visible')
         .click();
 
-        cy.wait(3000)
+        cy.wait(2000)
 
         //Clica na vitrine Automação
-        cy.get('.showcase-navigation-menu > :nth-child(9)', { timeout: 60000 })
-        .should('be.visible')
-        .click();
-        
-   });
+        cy.contains('div.showcase-menu-name', /^Teste Automação$/)
+  .should('be.visible')
+  .scrollIntoView()
+  .click();
+      
+  });
 
     it('Envia os campos da Primeira Trilha', () => {
 
@@ -438,7 +439,6 @@ cy.pause()
       .should('be.visible')
       .click({force:true})
 
-
     //Aguardando pagamento 
       cy.contains('a', 'Aguardando pagamento', { timeout: 60000 })
   .should('be.visible')
@@ -477,21 +477,22 @@ cy.pause()
 
     });
 
-  it("Vai até a vitrine", () => {
-
+ it("Vai até Vitrine", () => {
+        
         // Clicando no icon da vitrine
       cy.get('.active > .icon-next', { timeout: 60000 })
         .should('be.visible')
         .click();
 
-        cy.wait(3000)
+        cy.wait(2000)
 
         //Clica na vitrine Automação
-        cy.get('.showcase-navigation-menu > :nth-child(9)', { timeout: 60000 })
-        .should('be.visible')
-        .click();
-        
-   });
+        cy.contains('div.showcase-menu-name', /^Teste Automação$/)
+  .should('be.visible')
+  .scrollIntoView()
+  .click();
+      
+  });
 
      it("Verefica se o botãoe fetuar pagamento está visivel", () => {
 

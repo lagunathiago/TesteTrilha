@@ -66,7 +66,7 @@ function excluirTrilha(nome) {
     .scrollIntoView()
     .should('be.visible')
     .click();
-
+    
     cy.wait(4000)
 
 //Clica em Editar

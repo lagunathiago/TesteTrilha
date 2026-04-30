@@ -1,190 +1,332 @@
 Cypress.on('uncaught:exception', (err) => {
   const msg = err.message || '';
-  
-  // Erros conhecidos do Angular / Front que não devem quebrar o teste
-  if (
-    msg.includes('Cannot read properties of null') ||
-    msg.includes('Cannot read properties of undefined') ||   
-    msg.includes("reading 'then'") ||                        
-    msg.includes('charAt') ||
-    msg.includes('writeText') ||
-    msg.includes('Clipboard') ||
-    msg.includes('Clipboard') ||
-    msg.includes('renderCertificateClick is not a function')
-  ) {
+
+  const errosIgnorados = [
+    'Cannot read properties of null',
+    'Cannot read properties of undefined',
+    "reading 'then'",
+    'charAt',
+    'writeText',
+    'Clipboard',
+    'ResizeObserver loop completed with undelivered notifications',
+    'renderCertificateClick is not a function',
+  ];
+
+  if (errosIgnorados.some((erro) => msg.includes(erro))) {
     return false;
   }
 });
 
-describe("Teste - Login", () => {
-  before(() => {
-    cy.viewport(1920, 1080);
+const SELECTORS = {
+  menuTrilhas: '[title="Trilhas"] > .sideitem',
+  botaoNovaTrilha: '.title-bar .btn-icon',
+  inputNomeTrilha: 'input[placeholder="Informe o nome"]',
+  inputCodigoTrilha: 'input[ng-model="currentTrail.externalId"]',
+  abaEtapas: '[ui-sref="accessLink.content.trails.edit.id.version.stages"]',
+  botaoNovaEtapa: '.pt-20 > .flex > .btn-swipe-accent',
+  botaoNovoConteudo: '[colspan="6"] > .btn-swipe-accent',
+  selectTipoConteudo: '.pv-5 > .w-100',
+  opcaoDocumento: '.open > .ui-select-choices > :nth-child(3)',
+  selectDocumento: '[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default',
+  inputPesquisaSelect: '.ui-select-search:visible',
+  botaoAdicionarConteudo: '.start > .btn-swipe-accent',
+  abaTurmas: '[trails=""] > .tabs > .ng-scope',
+  botaoNovaTurma: '.gap > .btn-swipe-accent',
+  inputNomeTurma: 'input[placeholder="Informe um nome para a turma"]',
+  inputPreco: '#currentClassPrice',
+  checkboxAprovacaoGestor: '.column > :nth-child(1) > .icon-checkbox',
+  checkboxDeixarEmBranco: ':nth-child(2) > div.mt-20 > .middle > .checkbox > .icon-checkbox',
+  botaoProximo: '.navigation-controls > .ml-20',
+  botaoPermissaoUsuario: 'tr.ng-scope > :nth-child(4) > .middle > .btn',
+  selectUsuario: '[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default',
+  botaoSalvarTurma: '.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent',
+  botaoSalvarTrilha: '.content-box-footer > .flex > .btn-swipe-accent',
+  botaoEditarTrilha: 'button.btn-icon-accent.icon-edit',
+  botaoClonarTurma: '.center > .icon-copy',
+  checkboxGratuitoInput: 'input[ng-model="currentClass.free"]',
+};
 
-    cy.visit("https://lector.live/lector_suporte/subscribe/login");
-    cy.contains("button", "Entrar").click();
+function gerarDataHora() {
+  const agora = new Date();
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
-      .should('be.visible')
-      .type("thiagosuporte@uorak.com");
+  const data = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`;
 
-    cy.get("ng-transclude > .border", { timeout: 60000 })
-      .should('be.visible')
-      .type("123");
+  return data;
+  
+}
 
-    cy.get('#btn-entrar', { timeout: 60000 })
-      .should('be.visible')
-      .click();
-
-    // opcional: garante que saiu da tela de login
-    cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
-
-});
-
-  context("Teste de capa", () => {
-    it("Capa/Banner/Tradicional", () => {
-
-      // Clicando na aba Trilhas
-      cy.get('[title="Trilhas"] > .sideitem', { timeout: 60000 })
-        .should("be.visible")
-        .click();
-
-      //Clica na categoria 05/01
-      cy.contains("li.list-group-item", "00000Teste")
-      .click();
-
-      cy.get('.title-bar > .btn-icon').click()
-
-      cy.wait(1000)
-
-       //preenche o campo de nome da trilha
-        cy.get('input[placeholder="Informe o nome"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .focus()
-            .clear({ force: true })
-            .type('Teste Capa', { delay: 50 })
-
-      //Tradicional
-      cy.get(
-        'label.thumb-placeholder[aspect="square"] input[type="file"]'
-      ).selectFile("cypress/fixtures/images6.png", { force: true });
-      cy.log("AJUSTE A IMAGEM MANUALMENTE");
-      cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-      cy.wait(1000);
-      //Capa
-      cy.get(
-        'label.thumb-placeholder[aspect="cover"] input[type="file"]'
-      ).selectFile("cypress/fixtures/capa 3.png", { force: true });
-      cy.log("AJUSTE A IMAGEM MANUALMENTE");
-      cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-      cy.wait(1000);
-
-      //Baner
-      cy.get(
-        'label.thumb-placeholder[aspect="banner"] input[type="file"]'
-      ).selectFile("cypress/fixtures/210938.jpg", { force: true });
-      cy.log("AJUSTE A IMAGEM MANUALMENTE");
-      cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-      cy.wait(1000);
-    });
-
-    it("Estapas", () => {
-
-      //Estapas
-      cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
-      .scrollIntoView()
-      .click()
-
-      cy.wait(1000)
-
-      //Nova estapa
-      cy.get('.pt-20 > .flex > .btn-swipe-accent')
-      .click()
-
-      cy.wait(1000)
-
-      //Novo conteudo
-      cy.get('[colspan="6"] > .btn-swipe-accent')
-      .click()
-
-      cy.wait(1000)
-
-      //Clica em treinamento
-      cy.get('.pv-5 > .w-100')
-      .click()
-
-      cy.wait(1000)
-
-      //Clica em documento
-      cy.get('.open > .ui-select-choices > :nth-child(3)')
-      .click()
-
-      cy.wait(1000)
-
-      cy.contains(".ui-select-container", "Escolha um documento")
-        .should("be.visible")
-        .click()
-        .within(() => {
-          cy.get("input.ui-select-search")
-            .should("be.visible")
-            .type("Manual Minha");
-        });
-
-      cy.contains(".ui-select-choices-row", "Manual Minha", {
-        timeout: 30000,
-      })
-        .should("be.visible")
-        .click();
-
-      cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding')
-      .click()
-
-    });
- 
-    it('Cria a turma', () => {
-
-      //Vai até turma
-    cy.get('[trails=""] > .tabs > .ng-scope')
+function clicarElemento(selector, timeout = 60000) {
+  cy.get(selector, { timeout })
     .scrollIntoView()
-    .click(); 
+    .should('exist')
+    .should('be.visible')
+    .click({ force: true });
+}
 
-      //nova turma
-      cy.get('.gap > .btn-swipe-accent')
-      .click()
-     
-        // NOME DA TURMA (re-get após digitar para evitar re-render do Angular)
-        cy.get('input[placeholder="Informe um nome para a turma"]', { timeout: 20000 })
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click({ force: true })
-            .focus()
-            .clear({ force: true })
-            .type('Turma teste', { delay: 50, force: true })
-            .blur();
+function preencherCampo(selector, valor, timeout = 60000) {
+  cy.get(selector, { timeout })
+    .filter(':visible')
+    .first()
+    .should('be.enabled')
+    .scrollIntoView()
+    .click({ force: true })
+    .focus()
+    .clear({ force: true })
+    .type(valor, { delay: 50, force: true })
+    .blur();
 
-        cy.get('input[placeholder="Informe um nome para a turma"]')
-            .filter(':visible')
-            .first()
-            .should('have.value', 'Turma teste');
+  cy.get(selector)
+    .filter(':visible')
+    .first()
+    .should('have.value', valor);
+}
 
-        cy.get(".class-price > :nth-child(1) > .icon-checkbox").click(); //selecionar turma gratuita
-        cy.get(".column > :nth-child(1) > .icon-checkbox").click(); //aprovação do gestor
+function login() {
+  cy.visit('https://hml.lector.live/esmp/subscribe/login');
+  cy.viewport(1920, 1080);
 
-        cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
-        .click(); //salvar turma
-        
-        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-        //Salvar Turma
+  cy.contains('button', 'Entrar')
+    .should('be.visible')
+    .click({ force: true });
 
-      cy.wait(5000)
+  cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+    .should('be.visible')
+    .type('samos@mailto.plus');
 
-          });
-      });
+  cy.get('ng-transclude > .border', { timeout: 60000 })
+    .should('be.visible')
+    .type('123');
+
+  cy.get('#btn-entrar', { timeout: 60000 })
+    .should('be.visible')
+    .click();
+
+  cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
+}
+
+function acessarCategoriaTrilhas() {
+  clicarElemento(SELECTORS.menuTrilhas);
+
+  cy.contains('li.list-group-item', 'Teste Automação', { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+
+  cy.wait(2000);
+}
+
+function iniciarNovaTrilha() {
+  clicarElemento(SELECTORS.botaoNovaTrilha, 600000);
+}
+
+function preencherDadosGeraisTrilha(nomeTrilha) {
+  preencherCampo(SELECTORS.inputNomeTrilha, nomeTrilha);
+  preencherCampo(SELECTORS.inputCodigoTrilha, '012025');
+}
+
+function adicionarDocumentoNaEtapa() {
+  clicarElemento(SELECTORS.abaEtapas);
+  clicarElemento(SELECTORS.botaoNovaEtapa);
+  clicarElemento(SELECTORS.botaoNovoConteudo);
+  clicarElemento(SELECTORS.selectTipoConteudo);
+  clicarElemento(SELECTORS.opcaoDocumento);
+  clicarElemento(SELECTORS.selectDocumento);
+
+  cy.get(SELECTORS.inputPesquisaSelect, { timeout: 60000 })
+    .should('be.visible')
+    .type('Minha');
+
+  cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+    .click();
+
+  clicarElemento(SELECTORS.botaoAdicionarConteudo);
+}
+
+function abrirAbaTurmas() {
+  clicarElemento(SELECTORS.abaTurmas);
+}
+
+function criarNovaTurma(nomeTurma, config) {
+  abrirAbaTurmas();
+  clicarElemento(SELECTORS.botaoNovaTurma);
+
+  preencherCampo(SELECTORS.inputNomeTurma, nomeTurma, 20000);
+
+  if (config.gratuita) {
+    marcarGratuitoSeNecessario();
+  } else {
+    preencherPreco(config.precoInicial || '3.91');
+  }
+
+  if (config.comAprovacao) {
+    clicarElemento(SELECTORS.checkboxAprovacaoGestor);
+  }
+
+  if (!config.gratuita) {
+    clicarElemento(SELECTORS.checkboxDeixarEmBranco);
+  }
+
+  avançarEtapasDaTurma();
+  adicionarUsuarioAutomacao();
+  salvarTurma();
+}
+
+function preencherPreco(valor) {
+  cy.get(SELECTORS.inputPreco, { timeout: 60000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .scrollIntoView()
+    .click({ force: true })
+    .focus()
+    .clear({ force: true })
+    .type(valor, { delay: 50, force: true })
+    .blur();
+}
+
+function marcarGratuitoSeNecessario() {
+  cy.get(SELECTORS.checkboxGratuitoInput, { timeout: 60000 }).then(($checkbox) => {
+    if (!$checkbox.is(':checked')) {
+      cy.wrap($checkbox).click({ force: true });
+    }
   });
 
+  cy.get(SELECTORS.checkboxGratuitoInput).should('be.checked');
+}
+
+function avançarEtapasDaTurma() {
+  clicarElemento(SELECTORS.botaoProximo);
+  clicarElemento(SELECTORS.botaoProximo);
+  clicarElemento(SELECTORS.botaoPermissaoUsuario);
+}
+
+function adicionarUsuarioAutomacao() {
+  cy.get(SELECTORS.selectUsuario, { timeout: 60000 })
+    .type('Usuario Automação');
+
+  cy.contains('.ui-select-choices-row', 'Usuario Automação', { timeout: 60000 })
+    .first()
+    .click();
+
+  cy.contains('button', 'Adicionar')
+    .should('be.visible')
+    .click();
+
+  cy.wait(1000);
+}
+
+function salvarTurma() {
+  clicarElemento(SELECTORS.botaoSalvarTurma);
+}
+
+function salvarTrilha() {
+  clicarElemento(SELECTORS.botaoSalvarTrilha);
+  cy.wait(6000);
+}
+
+function abrirTrilhaCriada(nomeTrilha) {
+  cy.contains('.card-items', nomeTrilha, { timeout: 60000 })
+    .scrollIntoView()
+    .should('be.visible')
+    .click({ force: true });
+
+  cy.wait(4000);
+}
+
+function editarTrilha() {
+  clicarElemento(SELECTORS.botaoEditarTrilha, 10000);
+}
+
+function clonarTurmaEAlterarPreco(valorEsperado) {
+  abrirAbaTurmas();
+
+  clicarElemento(SELECTORS.botaoClonarTurma);
+
+  preencherPreco(valorEsperado);
+
+  clicarElemento(SELECTORS.checkboxDeixarEmBranco);
+
+  avançarEtapasDaTurma();
+  adicionarUsuarioAutomacao();
+  salvarTurma();
+
+  cy.contains(valorEsperado).should('be.visible');
+
+  salvarTrilha();
+}
+
+function criarTrilhaCompleta(config) {
+  const dataHora = gerarDataHora();
+
+  const nomeTrilha = `${config.nomeTrilha} - Automação ${dataHora}`;
+  const nomeTurma = `${config.nomeTurma} ${dataHora}`;
+
+  iniciarNovaTrilha();
+  preencherDadosGeraisTrilha(nomeTrilha);
+  adicionarDocumentoNaEtapa();
+
+  criarNovaTurma(nomeTurma, {
+    gratuita: config.gratuita,
+    comAprovacao: config.comAprovacao,
+    precoInicial: config.precoInicial,
+  });
+
+  salvarTrilha();
+
+  abrirTrilhaCriada(nomeTrilha);
+  editarTrilha();
+
+  clonarTurmaEAlterarPreco(config.precoClone);
+
+  cy.log(`Trilha criada com sucesso: ${nomeTrilha}`);
+}
+
+describe('Teste - Trilhas', () => {
+  before(() => {
+    login();
+  });
+
+  it('Vai até a Categoria', () => {
+    acessarCategoriaTrilhas();
+  });
+
+  it('Criando Trilha Paga com aprovação', () => {
+    criarTrilhaCompleta({
+      nomeTrilha: 'Paga com aprovação',
+      nomeTurma: 'Turma Teste Automação 1',
+      gratuita: false,
+      comAprovacao: true,
+      precoInicial: '3.91',
+      precoClone: '3.92',
+    });
+  });
+
+  it('Criando Trilha Paga sem aprovação', () => {
+    criarTrilhaCompleta({
+      nomeTrilha: 'Paga sem aprovação',
+      nomeTurma: 'Turma Teste 2',
+      gratuita: false,
+      comAprovacao: false,
+      precoInicial: '3.91',
+      precoClone: '3.92',
+    });
+  });
+
+  it('Criando Trilha Gratuita com aprovação', () => {
+    criarTrilhaCompleta({
+      nomeTrilha: 'Gratuita com aprovação',
+      nomeTurma: 'Turma Teste 3',
+      gratuita: true,
+      comAprovacao: true,
+      precoClone: '3.91',
+    });
+  });
+
+  it('Criando Trilha Gratuita sem aprovação', () => {
+    criarTrilhaCompleta({
+      nomeTrilha: 'Gratuita sem aprovação',
+      nomeTurma: 'Turma Teste 4',
+      gratuita: true,
+      comAprovacao: false,
+      precoClone: '3.91',
+    });
+  });
+});

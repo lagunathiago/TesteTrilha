@@ -394,10 +394,8 @@ describe("Teste - Login", () => {
             .first()
             .should('have.value', 'Turma teste');
 
-
         // gratuidade
         cy.get('.class-price > :nth-child(1) > .icon-checkbox').click();
-
 
         // SALVAR TURMA: clique + validação (ajuste o texto/resultado esperado)
         cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent').click({ force: true });
