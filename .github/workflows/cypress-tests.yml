@@ -25,18 +25,20 @@ jobs:
         run: npm ci
 
       - name: Rodar arquivo específico do Cypress
-        run: npx cypress run --browser chrome --headless --spec "cypress/e2e/CamposPersonalizadoESMP.cy.js"
+        run: npx cypress run --browser chrome --headless --config video=true,screenshotOnRunFailure=true --spec ""
 
       - name: Upload de screenshots
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: screenshots
-          path: cypress/screenshots
+          path: cypress/screenshots/**
+          if-no-files-found: warn
 
       - name: Upload de vídeos
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: videos
-          path: cypress/videos
+          path: cypress/videos/**
+          if-no-files-found: warn

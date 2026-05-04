@@ -55,7 +55,7 @@ describe("Teste - Login", () => {
 
   });
 
-  /*
+  
   it('Compra trilha á vista', () => {
 
     //Ver tudo
@@ -157,7 +157,6 @@ cy.get('.ui-select-choices:visible', { timeout: 10000 }).within(() => {
 
   });
 
-
    it('Compra a trilha á vista com cupom', () => {
 
     //Ver tudo
@@ -218,7 +217,6 @@ cy.get('.ui-select-choices:visible', { timeout: 10000 }).within(() => {
         .click();    
 
     });
-*/
 
    it("Minha área/Minhas compras/", () => {
 
@@ -373,7 +371,5 @@ it("Valida compra da Trilha Pagamento Sicreedi á vista com cupom", () => {
       .click()       
 
       });
-
-
 
 });

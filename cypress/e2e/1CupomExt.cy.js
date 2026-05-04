@@ -41,7 +41,6 @@ describe("Teste - Login", () => {
 });
 
 context("Teste Cupons", () => {
-  
 
     it("Clica em cupon", () => {
       // Clicando em Cadastros

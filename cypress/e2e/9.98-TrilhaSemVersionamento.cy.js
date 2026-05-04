@@ -377,6 +377,7 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .first()
                 .click();
             cy.wait(1000);
+
             cy.get('.open > .ui-select-choices > :nth-child(1)', { timeout: 15000 })
                 .should('be.visible')
                 .click();
@@ -415,7 +416,9 @@ describe("Teste - Criar Trilha Sem Versionamento", () => {
                 .filter(':visible')
                 .first()
                 .click();
+
             cy.wait(1000);
+            
             cy.get('.open > .ui-select-choices > :nth-child(2)', { timeout: 15000 })
                 .should('be.visible')
                 .click();

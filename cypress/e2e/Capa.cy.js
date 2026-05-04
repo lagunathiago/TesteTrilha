@@ -67,13 +67,12 @@ describe("Teste - Login", () => {
             .type('Teste Capa', { delay: 50 })
 
       //Tradicional
-      cy.get(
-        'label.thumb-placeholder[aspect="square"] input[type="file"]'
-      ).selectFile("cypress/fixtures/images6.png", { force: true });
+      cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile("cypress/fixtures/images6.png", { force: true });
       cy.log("AJUSTE A IMAGEM MANUALMENTE");
       cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
       cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
       cy.wait(1000);
+
       //Capa
       cy.get(
         'label.thumb-placeholder[aspect="cover"] input[type="file"]'
