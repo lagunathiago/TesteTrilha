@@ -58,9 +58,8 @@ describe("Teste - Login", () => {
       cy.wait(2000)
 
   });
-
   
-   it('Trilha Completa', () => {
+   it('Trilha Importada', () => {
 
          //Clica no botão de adicionar nova trilha
         cy.get('.title-bar > .btn-icon',{timeout:60000})
@@ -73,11 +72,11 @@ describe("Teste - Login", () => {
             .should('be.enabled')
             .focus()
             .clear({ force: true })
-            .type('Trilha Completa Automação', { delay: 50 })
-            .should('have.value', 'Trilha Completa Automação')
+            .type('Trilha Importada Automação', { delay: 50 })
+            .should('have.value', 'Trilha Importada Automação')
 
             //Tradicional
-      cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile("cypress/fixtures/Blumenau.jpg", { force: true });
+      cy.get('label.thumb-placeholder[aspect="cover"] input[type="file"]').selectFile("cypress/fixtures/imagem.jpg", { force: true });
       cy.log("AJUSTE A IMAGEM MANUALMENTE");
       cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
       cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
@@ -87,8 +86,8 @@ describe("Teste - Login", () => {
       cy.get('input[ng-model="currentTrail.minimumGradeToApprove"]', { timeout: 60000 })
   .should('be.visible')
   .clear()
-  .type('20')
-  .should('have.value', '20');
+  .type('10')
+  .should('have.value', '10');
 
   cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
   .should('be.visible')
@@ -99,63 +98,55 @@ describe("Teste - Login", () => {
       .click()
       .clear()
       .type('Descrição preenchida via Cypress');
+
   });
 
-  cy.wait(1000)
-
-    // =============================
-    // 🔹 Adicona conteudo do tipo Documento 
-    // =============================
-
-        //Clica em etapas
+   //Clica em etapas
         cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
         .click();
 
-        //Nova estapa
-        cy.get('.pt-20 > .flex > .btn-swipe-accent')
-        .click()
+  // ---- Ir para aba Etapas e importar etapa ----
+            cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]', { timeout: 15000 })
+                .scrollIntoView()
+                .click();
 
-        //Novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent')
-        .click()
+            cy.wait(1000);
 
-        //Seleciona o tipo de conteudo
-        cy.get('.pv-5 > .w-100')
-        .click()
+            // Clicar em "Importar etapa"
+            cy.get('.pt-20 > .flex > .btn-swipe-main', { timeout: 15000 })
+                .should('be.visible')
+                .click();
 
-        //Clica em documento
-        cy.get('.open > .ui-select-choices > :nth-child(3)')
-        .click()
+            cy.wait(1000);
 
-        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
-        .click()
+            // Buscar a trilha para importar
+            cy.get('.modal-body > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default', { timeout: 30000 })
+                .should('be.visible')
+                .type('Trilha Completa Automação')
 
-                cy.wait(1000)
-               
-cy.get('.ui-select-search:visible', { timeout: 60000 })
-  .should('be.visible')
-  .type('Minha');
+            cy.wait(3000);
 
-cy.contains('.ui-select-choices-row:visible', 'Minha área.pdf', { timeout: 60000 })
-  .click();
+            // Selecionar a trilha no dropdown
+            cy.contains('.ui-select-choices-row', 'Trilha Completa Automação', { timeout: 30000 })
+                .should('be.visible')
+                .click();
 
-      //Clcia em adicionar
-      cy.get('.start > .btn-swipe-accent')
-      .click()
+            cy.wait(1000);
 
-      cy.wait(2000)
+            // Confirmar importação
+            cy.get('ui-view.ng-scope > .modal-overlay > .modal > .end > .btn-swipe-accent', { timeout: 15000 })
+                .should('be.visible')
+                .click();
 
-    // =============================
+            cy.wait(5000);
+
+    // ================================================
     // 🔹 Adicona conteudo do tipo Treinamento
-    // =============================
+    // ================================================
 
         //Clica em etapas
         cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
         .click();
-
-        //Nova estapa
-        cy.get('.pt-20 > .flex > .btn-swipe-accent')
-        .click()
 
         //Novo conteúdo
       cy.contains('tr', 'Etapa 2')
@@ -172,12 +163,12 @@ cy.contains('.ui-select-choices-row:visible', 'Minha área.pdf', { timeout: 6000
 
   cy.get('.ui-select-search:visible', { timeout: 60000 })
   .should('be.visible')
-  .type('Treinamento pra Trilha Automação 1');
+  .type('agendamentos automação (não mexer)');
 
             cy.wait(1000);
 
             // Selecionar o treinamento no dropdown
-            cy.contains('.ui-select-choices-row', 'Treinamento pra Trilha Automação 1', { timeout: 20000 })
+            cy.contains('.ui-select-choices-row', 'agendamentos automação (não mexer)', { timeout: 20000 })
                 .should('be.visible')
                 .click();
 
@@ -187,254 +178,7 @@ cy.contains('.ui-select-choices-row:visible', 'Minha área.pdf', { timeout: 6000
      cy.get(':nth-child(7) > :nth-child(8) > .start > .btn-swipe-accent')
      .click()
 
-            cy.wait(2000);
-
-
-    // =============================
-    // 🔹 Adicona conteudo do tipo Avaliação(Todas na mesma pagina)
-    // =============================
-
-        //Clica em etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
-        .click();
-
-        //Nova estapa
-        cy.get('.pt-20 > .flex > .btn-swipe-accent')
-        .click()
-
-             //Novo conteúdo
-      cy.contains('tr', 'Etapa 3')
-  .within(() => {
-    cy.contains('button', 'Novo conteúdo')
-      .click();
-  })
-
-  cy.wait(1000)
-
-  //abre selection
-cy.get('.pv-5 > .w-100', { timeout: 15000 })
-                .filter(':visible')
-                .first()
-                .click();
-
-        cy.wait(1000)
-
-        //Clica em avaliação
-        cy.get('.open > .ui-select-choices > :nth-child(2)')
-        .click()
-
-        //Clica pra escrever a avaliação
-        cy.get(':nth-child(11) > :nth-child(2) > .content-info-container > [types="0,1"] > .multiselect > .border > .ui-select-match > .btn-default')
-        .click();
-
-         //Escreve a avaliação
-cy.get('input.ui-select-search:visible', { timeout: 10000 })
-  .first()
-  .type('todas na mesma', { force: true });
-
-            cy.wait(1000);
-
-            // Selecionar a avaliação no dropdown
-            cy.contains('.ui-select-choices-row', 'todas na mesma', { timeout: 15000 })
-                .should('be.visible')
-                .click();
-
-            cy.wait(1000);
-
-               //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
-     .click()
-
-            cy.wait(2000);
-
-    // =============================
-    // 🔹 Adicona conteudo do tipo Avaliação(uma por pagina)
-    // =============================
-
-
-          cy.contains('Etapa 3')
-  .parent()
-  .within(() => {
-    cy.contains('button', 'Novo conteúdo')
-      .click();
-  });
-
-    //abre selection
-cy.get('.pv-5 > .w-100', { timeout: 15000 })
-                .filter(':visible')
-                .first()
-                .click();
-
-                //Clica em avaliação
-        cy.get('.open > .ui-select-choices > :nth-child(2)')
-        .click()
-
-        //Clica pra escrever a avaliação
-        cy.get(':nth-child(11) > :nth-child(2) > .content-info-container > [types="0,1"] > .multiselect > .border > .ui-select-match > .btn-default')
-        .click();
-
-         //Escreve a avaliação
-cy.get('input.ui-select-search:visible', { timeout: 10000 })
-  .first()
-  .type('uma por pagina Thiago', { force: true });
-
-            cy.wait(1000);
-
-  // Selecionar a avaliação no dropdown
-           cy.get('.ui-select-choices-row:visible', { timeout: 15000 })
-  .eq(1) // segunda posição (0 = primeira)
-  .click({ force: true });
-
-  cy.wait(1000)
-
-   //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
-     .click()
-
-     cy.wait(2000);
-
-     // =============================
-    // 🔹 Adicona conteudo do tipo Avaliação Reação(uma por pagina)
-    // =============================
-
-          cy.contains('Etapa 3')
-  .parent()
-  .within(() => {
-    cy.contains('button', 'Novo conteúdo')
-      .click();
-  });
-
-    //abre selection
-cy.get('.pv-5 > .w-100', { timeout: 15000 })
-                .filter(':visible')
-                .first()
-                .click();
-
-                //Clica em avaliação
-        cy.get('.open > .ui-select-choices > :nth-child(2)')
-        .click()
-
-        //Clica pra escrever a avaliação
-        cy.get(':nth-child(11) > :nth-child(2) > .content-info-container > [types="0,1"] > .multiselect > .border > .ui-select-match > .btn-default')
-        .click();
-
-         //Escreve a avaliação
-cy.get('input.ui-select-search:visible', { timeout: 10000 })
-  .first()
-  .type('Reação uma por página Thiago', { force: true });
-
-            cy.wait(1000);
-
-  // Selecionar a avaliação no dropdown
-  cy.contains('.ui-select-choices-row', 'Reação uma por página Thiago', { timeout: 15000 })
-                .should('be.visible')
-                .click();
-
-  cy.wait(1000)
-
-   //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
-     .click()
-
-     cy.wait(2000);
-
-
-      // =============================
-    // 🔹 Adicona conteudo do tipo Avaliação Reação(todas na mesma)
-    // =============================
-
-          cy.contains('Etapa 3')
-  .parent()
-  .within(() => {
-    cy.contains('button', 'Novo conteúdo')
-      .click();
-  });
-
-    //abre selection
-cy.get('.pv-5 > .w-100', { timeout: 15000 })
-                .filter(':visible')
-                .first()
-                .click();
-
-                //Clica em avaliação
-        cy.get('.open > .ui-select-choices > :nth-child(2)')
-        .click()
-
-        //Clica pra escrever a avaliação
-        cy.get(':nth-child(11) > :nth-child(2) > .content-info-container > [types="0,1"] > .multiselect > .border > .ui-select-match > .btn-default')
-        .click();
-
-         //Escreve a avaliação
-cy.get('input.ui-select-search:visible', { timeout: 10000 })
-  .first()
-  .type('Reação todas em uma', { force: true });
-
-            cy.wait(1000);
-
-  // Selecionar a avaliação no dropdown
-  cy.contains('.ui-select-choices-row', 'Reação todas em uma ', { timeout: 15000 })
-                .should('be.visible')
-                .click();
-
-  cy.wait(1000)
-
-   //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
-     .click()
-
-     cy.wait(2000);
-
-    // =============================
-    // 🔹 Adicona conteudo do tipo Scorm
-    // =============================
-
-        //Nova estapa
-        cy.get('.pt-20 > .flex > .btn-swipe-accent')
-        .click()
-
-        //Novo conteúdo
-      cy.contains('tr', 'Etapa 4')
-  .within(() => {
-    cy.contains('button', 'Novo conteúdo')
-      .click();
-  })
-
-  //abre selection
-cy.get('.pv-5 > .w-100', { timeout: 15000 })
-                .filter(':visible')
-                .first()
-                .click();
-
-                //Clica em Scorm
-        cy.get('.open > .ui-select-choices > :nth-child(4)')
-        .click()
-
-  cy.wait(1000)
-
-  //clica pra escrever
-cy.get('[ng-if="currentContent.type == \'SCORM\'"]')
-  .last()
-  .find('.ui-select-toggle, .btn-default')
-  .click({ force: true });
-
-  cy.get('.ui-select-search:visible', { timeout: 60000 })
-  .should('be.visible')
-  .type('Simbologia');
-
-            cy.wait(1000);
-
-            // Selecionar o treinamento no dropdown
-            cy.contains('.ui-select-choices-row', 'Simbologia', { timeout: 20000 })
-                .should('be.visible')
-                .click();
-
-            cy.wait(1000);
-
-            //Clcia em adicionar
-     cy.get(':nth-child(18) > :nth-child(8) > .start > .btn-swipe-accent')
-     .click()
-
-            cy.wait(7000);
+            cy.wait(5000);
 
     // =========================================================================================================
     // 🔹 Criação da truma Gratuita
@@ -476,8 +220,13 @@ cy.get('[ng-if="currentContent.type == \'SCORM\'"]')
             .type('1.00', { delay: 50, force: true })
             .blur()
 
-             cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+             cy.get('.navigation-controls > .ml-20').click()//botao proximo
+             
+             cy.log('AGENDE OS CONTEÚDOS')
+             cy.pause()
+             cy.log('AGENDE OS CONTEÚDOS')
+
+             cy.get('.navigation-controls > .ml-20').click()//botao proximo
 
        cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
 
@@ -496,18 +245,20 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
       cy.wait(1000)
 
-       // SALVAR TURMA
+       //Salvar Trilha
         cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent').click();
 
-        //salvar trilha
+        //Salvar Trilha
         cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
-        
-    });
+               
+   });
 
     it('Duplica turma paga, cria turma paga e adiciona certificado', () => {
       
+//===========================Coloca a turma como gratuita
+
          //Clica no Treinamento
-  cy.contains('.card-title', 'Trilha Completa Automação', {timeout: 60000})
+  cy.contains('.card-title', 'Trilha Importada Automação', {timeout: 60000})
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true })
@@ -519,11 +270,13 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
   .should('be.visible')
   .click()
 
-  cy.wait(1000)
+  cy.wait(3000)
 
   //Clica na turma
   cy.get('[trails=""] > .tabs > .ng-scope')
   .click()
+
+  cy.wait(4000)
 
 //Clica em editar da turma
   cy.get('.center > .icon-edit')
@@ -544,6 +297,8 @@ cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent
 
 cy.wait(1000)
 
+//============================Duplica a turma gratuita para paga
+
 //Clica em duplicar
 cy.get('.center > .icon-copy')
 .click()
@@ -561,6 +316,31 @@ cy.get('.center > .icon-copy')
 
             cy.wait(1000)
 
+            cy.get('.navigation-controls > .ml-20').click()//botao proximo
+             
+             cy.log('AGENDE OS CONTEÚDOS')
+             cy.pause()
+             cy.log('AGENDE OS CONTEÚDOS')
+
+             cy.get('.navigation-controls > .ml-20').click()//botao proximo
+
+             cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+
+      cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
+      .type("Aluno")
+
+cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
+  .first()
+  .click()
+
+  cy.wait(1000)
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
+
             //Salvar Truma
         cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
         .click();
@@ -571,10 +351,10 @@ cy.get('.center > .icon-copy')
 
         cy.wait(5000)
 
-        //=======================================CRIA TURMA================================================//
+        //=======================================CRIA TURMA PAGA================================================//
         
         //Clica no Treinamento
-  cy.contains('.card-title', 'Trilha Completa Automação', {timeout: 60000})
+  cy.contains('.card-title', 'Trilha Importada Automação', {timeout: 60000})
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true })
@@ -586,11 +366,13 @@ cy.get('.center > .icon-copy')
   .should('be.visible')
   .click()
 
-  cy.wait(1000)
+  cy.wait(5000)
 
   //Clica na Turma
   cy.get('[trails=""] > .tabs > .ng-scope')
   .click()
+
+  cy.wait(4000)
 
   //Clica em Nova turma
   cy.get('.gap > .btn-swipe-accent')
@@ -618,11 +400,16 @@ cy.get('.center > .icon-copy')
   .click()
 
   cy.wait(1000)
-            
-             cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.get('.navigation-controls > .ml-20').click()//botao prximo
 
-       cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+     cy.get('.navigation-controls > .ml-20').click()//botao proximo
+            
+             cy.log('AGENDE OS CONTEÚDOS')
+             cy.pause()
+             cy.log('AGENDE OS CONTEÚDOS')
+
+             cy.get('.navigation-controls > .ml-20').click()//botao proximo
+
+     cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
 
       cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
       .type("Aluno")
@@ -647,10 +434,10 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
         cy.wait(5000);
 
-        //=========================CRIA TRILHA PAGA======================//
+        //=========================COLOC A TURMA COMO PAGA======================//
 
         //Clica na trilha
-  cy.contains('.card-title', 'Trilha Completa Automação', {timeout: 60000})
+  cy.contains('.card-title', 'Trilha Importada Automação', {timeout: 60000})
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true })
@@ -662,7 +449,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
   .should('be.visible')
   .click()
 
-  cy.wait(1000)
+  cy.wait(4000)
 
   //Clica na Turma
   cy.get('[trails=""] > .tabs > .ng-scope')
@@ -676,11 +463,15 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
       .click({ force: true });
   });
 
-  //Tira a fleg de Gratuito
+  cy.wait(1000)
+
+  //fleg de Gratuito
   cy.get('.class-price > :nth-child(1) > .icon-checkbox')
   .click()
 
-// PREÇO (máscara monetária: 100 => 1,00)
+  cy.wait(1000)
+
+  // PREÇO (máscara monetária: 391 => 3,91)
         cy.get('#currentClassPrice', { timeout: 60000 })
             .should('be.visible')
             .and('not.be.disabled')
@@ -693,18 +484,46 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
             cy.wait(1000)
 
-       //Salvar Turma
-        cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent').click();
+            cy.get('.navigation-controls > .ml-20').click()//botao proximo
+             
+             cy.log('AGENDE OS CONTEÚDOS')
+             cy.pause()
+             cy.log('AGENDE OS CONTEÚDOS')
+
+             cy.get('.navigation-controls > .ml-20').click()//botao proximo
+
+             cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+
+      cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
+      .type("Aluno")
+
+cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
+  .first()
+  .click()
+
+  cy.wait(4000)
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(4000)
+
+            //Salvar Truma
+        cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
+        .click();
 
         //Salvar Trilha
-        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
+        cy.get('.content-box-footer > .flex > .btn-swipe-accent')
+        .click();
 
         cy.wait(7000);
 
+    
 //===========================Duplica a turma paga============================//
 
 //Clica na trilha
-  cy.contains('.card-title', 'Trilha Completa Automação', {timeout: 60000})
+  cy.contains('.card-title', 'Trilha Importada Automação', {timeout: 60000})
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true })
@@ -716,11 +535,13 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
   .should('be.visible')
   .click()
 
-  cy.wait(1000)
+  cy.wait(4000)
 
   //Clica na Turma
   cy.get('[trails=""] > .tabs > .ng-scope')
   .click()
+
+  cy.wait(4000)
 
   //Clica em duplicar
   cy.contains('tr', 'Turma Paga', { timeout: 60000 })
@@ -735,49 +556,97 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
   cy.get('.class-price > :nth-child(1) > .icon-checkbox')
   .click()
 
- //Salvar Turma
+  cy.get('.navigation-controls > .ml-20').click()//botao proximo
+             
+             cy.log('AGENDE OS CONTEÚDOS')
+             cy.pause()
+             cy.log('AGENDE OS CONTEÚDOS')
+
+             cy.get('.navigation-controls > .ml-20').click()//botao proximo
+
+             cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+
+      cy.get('[ng-show="step == 2"] > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
+      .type("Aluno")
+
+cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
+  .first()
+  .click()
+
+  cy.wait(1000)
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
+
+            //Salvar Truma
         cy.get('.editing-class > :nth-child(1) > .content-box-footer > .btn-swipe-accent')
         .click();
 
-        //Adiciona certificado
-         cy.get('[ui-sref="accessLink.content.trails.edit.id.version.certificate"]', { timeout: 15000 })
-                    .should('be.visible')
-                    .click();
-
-                    //Clica em escolher Certificado
-                    cy.get('.p-20 > .box > .btn-swipe-accent')
-                    .click()
-
-                cy.wait(1000);
-
-                // ========== PASSO 7: CLICAR EM ESCOLHER CERTIFICADO ==========
-                cy.get('[name="TrailCertificateSelect"] > .ui-select-match > .btn-default')
-                    .should('be.visible')
-                    .click();
-
-                    // Depois digita no input de busca que aparece
-                cy.get('[name="TrailCertificateSelect"] input[placeholder="Escolha um certificado"]', { timeout: 15000 })
-                    .should('be.visible')
-                    .type('Certificado da Trilha');
-
-                cy.wait(2000); //Espera os resultados carregarem
-
-                // Seleciona o certificado no dropdown
-                cy.get('.ui-select-highlight', { timeout: 15000 })
-                    .first()
-                    .should('be.visible')
-                    .click();
-
-                cy.wait(2000);
-
-                 //Salvar Trilha
+        //Salvar Trilha
         cy.get('.content-box-footer > .flex > .btn-swipe-accent')
         .click();
 
-        cy.wait(7000)
+        cy.wait(5000)
+
+//=======================================ADICIONA CERTIFICADO===============//
+        
+//Clica na trilha
+  cy.contains('.card-title', 'Trilha Importada Automação', {timeout: 60000})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+
+   cy.wait(5000)
+
+  //Clica em editar
+  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Adiciona certificado
+  cy.get('[ui-sref="accessLink.content.trails.edit.id.version.certificate"]', { timeout: 15000 })
+        .should('be.visible')
+        .click();
+
+ //Clica em escolher Certificado
+        cy.get('.p-20 > .box > .btn-swipe-accent')
+          .click()
+
+                cy.wait(1000);
+
+ // ========== PASSO 7: CLICAR EM ESCOLHER CERTIFICADO ==========
+     cy.get('[name="TrailCertificateSelect"] > .ui-select-match > .btn-default')
+        .should('be.visible')
+        .click();
+
+                    // Depois digita no input de busca que aparece
+  cy.get('[name="TrailCertificateSelect"] input[placeholder="Escolha um certificado"]', { timeout: 15000 })
+        .should('be.visible')
+        .type('Certificado da Trilha');
+
+                cy.wait(2000); //Espera os resultados carregarem
+
+ // Seleciona o certificado no dropdown
+    cy.get('.ui-select-highlight', { timeout: 15000 })
+         .first()
+         .should('be.visible')
+         .click();
+
+  cy.wait(2000);
+
+        //Salvar Trilha
+        cy.get('.content-box-footer > .flex > .btn-swipe-accent')
+        .click();
+
+        cy.wait(10000)
 
         cy.log('✅ Automação da Criação da trilha completa concluída com sucesso');
 
-    });
+
+
+  });
 
 });
