@@ -47,8 +47,6 @@ function fazerLogin(email, senha) {
         .type(senha);
     cy.wait(2000);
 
-
-
     // Botão entrar
     cy.get('#btn-entrar')
         .should('be.enabled')

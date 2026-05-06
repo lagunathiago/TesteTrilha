@@ -74,18 +74,15 @@ it('Clica na Trilha e Faz Incrição', () => {
     .should('be.visible')
     .click();
 
-    /*
-
     //Faz incrição
     cy.get(':nth-child(2) > .mt-10 > .default-gap > div > .btn-swipe-accent')
     .should('be.visible')
     .click();
 
     cy.wait(6000)
-    */
+    
 
   });
-
 
     it('Visualiza o Documento', () => {
 
@@ -98,9 +95,9 @@ it('Clica na Trilha e Faz Incrição', () => {
 
     cy.wait(4000)
 
-     cy.log('VISUALIZE O DOCUMENTO')
-     cy.wait(6000)
-     cy.log('VISUALIZE O DOCUMENTO')
+    cy.log('VISUALIZE O DOCUMENTO E VOLTE')
+    cy.pause()
+    cy.log('VISUALIZE O DOCUMENTO E VOLTE')
 
      //Clica em voltar
  cy.get('.hide-resource:visible')
@@ -109,7 +106,7 @@ it('Clica na Trilha e Faz Incrição', () => {
   
  });
 
- /*
+ 
  it('Visualize os conteúdos do treinamento', () => {
 
     //Clica em acessar no Treinamento
@@ -124,7 +121,6 @@ it('Clica na Trilha e Faz Incrição', () => {
 
   });
 
-  
  it('Visualize os conteúdos do segundo treinamento', () => {
 
     //Clica em acessar no 
@@ -137,7 +133,6 @@ it('Clica na Trilha e Faz Incrição', () => {
     cy.log('VISUALIZE OS CONTEUDOS DO TREINAMENTO')
 
   });
-*/
 
   it('Responda as avaliações', () => {
 

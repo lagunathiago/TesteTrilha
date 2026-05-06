@@ -80,24 +80,40 @@ describe("Teste - Login", () => {
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+        //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
+
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();
@@ -174,24 +190,40 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+         //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
+
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();
@@ -270,24 +302,40 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+        //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
+
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();
@@ -398,24 +446,39 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+        //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();
@@ -540,24 +603,39 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+         //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();
@@ -651,24 +729,40 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+         //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
+
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();
@@ -792,24 +886,39 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna', {timeout:60000})
             .type('012025', { delay: 30 })
             .should('have.value', '012025')
 
-        //seleciona etapas
-        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]').click();
-        
-        //clica no botão de adicionar nova etapa
-        cy.get('button[ng-click="createStage()"]')
-            .filter(':visible')
-            .first()
-            .should('be.enabled')
-            .scrollIntoView()
-            .click();
+         //Clica em etapas
+        cy.get('[ui-sref="accessLink.content.trails.edit.id.version.stages"]')
+        .click();
 
-        //adicionar novo conteúdo
-        cy.get('[colspan="6"] > .btn-swipe-accent').click();
+        //Nova estapa
+        cy.get('.pt-20 > .flex > .btn-swipe-accent')
+        .click()
 
-        //seleciona o treinamento
-        cy.get('[model="currentContent.course"] > .multiselect > .border > .ui-select-match > .btn-default').type('teste');
-        cy.get('#ui-select-choices-row-39-0').click();
-        cy.get('.start > .btn-swipe-accent > ng-transclude > .ng-binding').click();
+        //Novo conteúdo
+        cy.get('[colspan="6"] > .btn-swipe-accent')
+        .click()
+
+        //Seleciona o tipo de conteudo
+        cy.get('.pv-5 > .w-100')
+        .click()
+
+        //Clica em documento
+        cy.get('.open > .ui-select-choices > :nth-child(3)')
+        .click()
+
+        cy.get('[model="currentContent.document"] > .multiselect > .border > .ui-select-match > .btn-default')
+        .click()
+               
+cy.get('.ui-select-search:visible', { timeout: 60000 })
+  .should('be.visible')
+  .type('Minha');
+
+cy.contains('.ui-select-choices-row:visible', 'Minha Área - Adm.pdf', { timeout: 60000 })
+  .click();
+
+      //Clcia em adicionar
+      cy.get('.start > .btn-swipe-accent')
+      .click()
 
         //adcicionar turma
         cy.get('[trails=""] > .tabs > .ng-scope').click();

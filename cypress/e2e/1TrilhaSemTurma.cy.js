@@ -182,7 +182,7 @@ cy.contains('.ui-select-choices-row:visible', 'Minha área.pdf', { timeout: 6000
             cy.wait(1000);
 
             //Clcia em adicionar
-     cy.get(':nth-child(7) > :nth-child(8) > .start > .btn-swipe-accent')
+     cy.get(':nth-child(7) > :nth-child(7) > .start > .btn-swipe-accent')
      .click()
 
             cy.wait(2000);
@@ -239,7 +239,7 @@ cy.get('input.ui-select-search:visible', { timeout: 10000 })
             cy.wait(1000);
 
                //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
+     cy.get(':nth-child(11) > :nth-child(7) > .start > .btn-swipe-accent')
      .click()
 
             cy.wait(2000);
@@ -277,14 +277,14 @@ cy.get('input.ui-select-search:visible', { timeout: 10000 })
             cy.wait(1000);
 
   // Selecionar a avaliação no dropdown
-           cy.get('.ui-select-choices-row:visible', { timeout: 15000 })
-  .eq(1) // segunda posição (0 = primeira)
-  .click({ force: true });
+            cy.contains('.ui-select-choices-row', 'Avaliação uma por página', { timeout: 15000 })
+                .should('be.visible')
+                .click();
 
   cy.wait(1000)
 
    //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
+     cy.get(':nth-child(11) > :nth-child(7) > .start > .btn-swipe-accent')
      .click()
 
      cy.wait(2000);
@@ -329,7 +329,7 @@ cy.get('input.ui-select-search:visible', { timeout: 10000 })
   cy.wait(1000)
 
    //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
+     cy.get(':nth-child(11) > :nth-child(7) > .start > .btn-swipe-accent')
      .click()
 
      cy.wait(2000);
@@ -374,7 +374,7 @@ cy.get('input.ui-select-search:visible', { timeout: 10000 })
   cy.wait(1000)
 
    //Clcia em adicionar
-     cy.get(':nth-child(11) > :nth-child(8) > .start > .btn-swipe-accent')
+     cy.get(':nth-child(11) > :nth-child(7) > .start > .btn-swipe-accent')
      .click()
 
      cy.wait(2000);
@@ -426,7 +426,7 @@ cy.get('[ng-if="currentContent.type == \'SCORM\'"]')
             cy.wait(1000);
 
             //Clcia em adicionar
-     cy.get(':nth-child(18) > :nth-child(8) > .start > .btn-swipe-accent')
+     cy.get(':nth-child(18) > :nth-child(7) > .start > .btn-swipe-accent')
      .click()
 
             cy.wait(7000);

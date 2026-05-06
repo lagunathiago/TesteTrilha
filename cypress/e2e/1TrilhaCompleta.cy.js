@@ -58,7 +58,6 @@ describe("Teste - Login", () => {
       cy.wait(2000)
 
   });
-
   
    it('Trilha Completa', () => {
 

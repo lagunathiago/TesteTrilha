@@ -89,8 +89,8 @@ describe("Teste - Login", () => {
         cy.get('[ng-show="!sicredi.paymentOption"] > .btn-swipe-accent').click();
 
         
-    });
+        });
 
-    
+
     });
   }); 
