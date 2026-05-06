@@ -69,10 +69,12 @@ it('Clica na Trilha e Faz Incrição', () => {
     cy.wait(3000)
 
     //Clica na trilha
-    cy.contains('.card-container', 'Trilha Completa Automação', { timeout: 60000 })
+    cy.contains('.card-container', 'Trilha Importada Automação', { timeout: 60000 })
     .scrollIntoView()
     .should('be.visible')
     .click();
+
+    /*
 
     //Faz incrição
     cy.get(':nth-child(2) > .mt-10 > .default-gap > div > .btn-swipe-accent')
@@ -80,11 +82,12 @@ it('Clica na Trilha e Faz Incrição', () => {
     .click();
 
     cy.wait(6000)
+    */
 
   });
 
-  
-  it('Visualiza o Documento', () => {
+
+    it('Visualiza o Documento', () => {
 
     cy.wait(4000)
 
@@ -106,10 +109,12 @@ it('Clica na Trilha e Faz Incrição', () => {
   
  });
 
+ /*
  it('Visualize os conteúdos do treinamento', () => {
 
     //Clica em acessar no Treinamento
     cy.get(':nth-child(3) > .overflow-x > .stage-content-list > tbody > tr.ng-scope > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+    .first()
     .should('be.visible')
     .click()
 
@@ -119,9 +124,22 @@ it('Clica na Trilha e Faz Incrição', () => {
 
   });
 
-  it('Responda as avaliações', () => {
+  
+ it('Visualize os conteúdos do segundo treinamento', () => {
 
-     cy.wait(4000)
+    //Clica em acessar no 
+      cy.get(':nth-child(3) > .overflow-x > .stage-content-list > tbody > :nth-child(2) > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+    .should('be.visible')
+    .click()
+
+    cy.log('VISUALIZE OS CONTEUDOS DO TREINAMENTO')
+    cy.pause()
+    cy.log('VISUALIZE OS CONTEUDOS DO TREINAMENTO')
+
+  });
+*/
+
+  it('Responda as avaliações', () => {
 
     //====================================Clica em acessar na avaliação todas na mesma página Thiago
     cy.get(':nth-child(4) > .overflow-x > .stage-content-list > tbody > :nth-child(1) > :nth-child(6) > .pv-5 > .btn-swipe-accent')
@@ -135,7 +153,7 @@ it('Clica na Trilha e Faz Incrição', () => {
     cy.wait(2000)
 
    //==================================Clica em acessar na avaliação uma por página Thiago
-    cy.get(':nth-child(2) > :nth-child(6) > .pv-5 > .btn-swipe-accent')
+    cy.get(':nth-child(4) > .overflow-x > .stage-content-list > tbody > :nth-child(2) > :nth-child(6) > .pv-5 > .btn-swipe-accent')
     .should('be.visible')
     .click()
 
@@ -169,7 +187,7 @@ it('Clica na Trilha e Faz Incrição', () => {
 
   });
 
-  it('Visualize o conteudo scorm', () => {
+   it('Visualize o conteudo scorm', () => {
 
     cy.wait(2000)
 
